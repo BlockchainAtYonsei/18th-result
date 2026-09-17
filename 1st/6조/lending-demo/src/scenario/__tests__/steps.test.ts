@@ -9,6 +9,7 @@ import { buildScenarioA, SCENARIO_A_ID } from '../scenarioA.ts';
 import { buildScenarioB, SCENARIO_B_ID } from '../scenarioB.ts';
 import type { Role } from '../types.ts';
 
+// .omc/artifacts/run-A.json .steps[].id, in order
 const RUN_A_STEP_IDS = [
   'vaultCreate',
   'vaultDeposit',
@@ -16,10 +17,12 @@ const RUN_A_STEP_IDS = [
   'coverDeposit',
   'loanSet',
   'loanPay',
+  // added 2026-09-11 (after the run-A.json capture): broker recovers its cover before redemption
   'coverWithdraw',
   'vaultWithdraw',
 ];
 
+// .omc/artifacts/run-B.json .steps[].id, in order
 const RUN_B_STEP_IDS = [
   'vaultCreate',
   'vaultDeposit',
@@ -75,6 +78,8 @@ describe('buildScenarioA', () => {
     expect(loanPay?.recover).toHaveLength(1);
     expect(loanPay?.recover?.[0]?.id).toBe('loanPayLate');
     expect(loanPay?.recover?.[0]?.signer).toBe('borrower');
+    // The recovery alternative must not itself carry a further recovery step, or a
+    // late payment that also fails would retry forever.
     expect(loanPay?.recover?.[0]?.recover).toBeUndefined();
   });
 
@@ -145,15 +150,23 @@ describe('buildScenarioB', () => {
 
 describe('A and B share steps 1-5 by construction (same factory functions)', () => {
   it('the first five step ids are identical between A and B', () => {
-    const a = buildScenarioA().slice(0, 5).map((s) => s.id);
-    const b = buildScenarioB().slice(0, 5).map((s) => s.id);
+    const a = buildScenarioA()
+      .slice(0, 5)
+      .map((s) => s.id);
+    const b = buildScenarioB()
+      .slice(0, 5)
+      .map((s) => s.id);
     expect(a).toEqual(b);
     expect(a).toEqual(['vaultCreate', 'vaultDeposit', 'loanBrokerSet', 'coverDeposit', 'loanSet']);
   });
 
   it('A and B diverge only from step 6 onward', () => {
-    const a = buildScenarioA().slice(5).map((s) => s.id);
-    const b = buildScenarioB().slice(5).map((s) => s.id);
+    const a = buildScenarioA()
+      .slice(5)
+      .map((s) => s.id);
+    const b = buildScenarioB()
+      .slice(5)
+      .map((s) => s.id);
     expect(a).toEqual(['loanPay', 'coverWithdraw', 'vaultWithdraw']);
     expect(b).toEqual(['loanImpair', 'loanDefault', 'vaultWithdraw']);
   });
