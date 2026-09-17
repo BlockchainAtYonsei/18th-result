@@ -29,7 +29,7 @@ MetaMask 필요, 가스용 Sepolia ETH는 [faucet](https://sepoliafaucet.com)에
 | 시나리오 | 내용 |
 |---|---|
 | **A · 정상 렌딩** | 예치 → 대출 → 분할상환 → cover 회수 → 인출. 예금자가 이자 수익 |
-| **B · 채무불행행** | 차입자 미상환 → impair → default(first-loss waterfall) → 예금자 손실. cover 흡수 + 예금자 부담 = 원금 |
+| **B · 채무불이행** | 차입자 미상환 → impair → default(first-loss waterfall) → 예금자 손실. cover 흡수 + 예금자 부담 = 원금 |
 | **C · 집중도 한도 (하네스 ①)** | 대형 단일대출 시도 → 하네스 ON이면 차단(집중 리스크 방지), OFF면 실행 |
 | **D · 이력 연동 공탁 (하네스 ③)** | 대출 2건 중 1건 디폴트 → 유효 CoverRateMinimum 자동 상향(10%→50%) |
 
