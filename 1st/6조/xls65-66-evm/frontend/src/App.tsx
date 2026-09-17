@@ -649,7 +649,7 @@ export default function App() {
 
   if (!deployment) return <main className="manifest-loading">
     <nav>
-      <div className="brand"><span>⅕</span><div><b>SIXTH SENSE</b><small>XLS-65/66 · SEPOLIA</small></div></div>
+      <div className="brand"><span>⅙</span><div><b>SIXTH SENSE</b><small>XLS-65/66 · SEPOLIA</small></div></div>
       <div className="wallet"><span className={account ? 'online' : ''} />{account ? short(account) : '지갑 미연결'}
         <button onClick={() => void connect(Boolean(account))}>{account ? '계정 전환' : '지갑 연결'}</button></div>
     </nav>
@@ -685,7 +685,7 @@ export default function App() {
 
   return <main>
     <nav>
-      <div className="brand"><span>⅕</span><div><b>SIXTH SENSE</b><small>XLS-65/66 · SEPOLIA</small></div></div>
+      <div className="brand"><span>⅙</span><div><b>SIXTH SENSE</b><small>XLS-65/66 · SEPOLIA</small></div></div>
       <div className="wallet"><span className={account ? 'online' : ''} />{account ? short(account) : '지갑 미연결'}
         <button onClick={() => void createEnvironment()} disabled={deploying}>{deploying ? '배포 중…' : '새 환경 배포'}</button>
         <button onClick={() => void sweepGas()} disabled={deploying}>가스 회수</button>
