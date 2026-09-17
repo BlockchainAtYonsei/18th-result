@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-pretendard), Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+  --ink: #111827;
+  --muted: #667085;
+  --line: #e4e7ec;
+  --surface-subtle: #f5f7fb;
+  --brand: #175cd3;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-pretendard), Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-feature-settings: "tnum" 1, "ss05" 1;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #dbeafe;
+  color: #102a56;
+}
+
+.numeric {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.025em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

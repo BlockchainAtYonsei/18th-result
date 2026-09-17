@@ -1,0 +1,44 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="background" x1="80" y1="40" x2="1120" y2="635" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#172554"/>
+      <stop offset="0.48" stop-color="#1D4ED8"/>
+      <stop offset="1" stop-color="#67E8F9"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(845 315) rotate(142) scale(420 370)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-120" y="-120" width="1440" height="915" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" rx="36" fill="url(#background)"/>
+  <g opacity="0.42" filter="url(#blur)">
+    <circle cx="230" cy="120" r="190" fill="#A5F3FC"/>
+    <circle cx="1040" cy="570" r="230" fill="#4338CA"/>
+  </g>
+  <rect width="1200" height="675" rx="36" fill="url(#glow)"/>
+  <g opacity="0.24" stroke="#FFFFFF" stroke-width="2">
+    <path d="M0 520C180 420 322 455 475 520C640 590 825 605 1200 390"/>
+    <path d="M0 580C205 475 355 512 520 575C690 640 885 640 1200 465"/>
+    <path d="M165 0C270 160 290 285 210 465C170 555 170 620 205 675"/>
+  </g>
+  <g transform="translate(730 118)">
+    <circle cx="215" cy="215" r="188" fill="#0F172A" fill-opacity="0.22" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="3"/>
+    <circle cx="215" cy="215" r="142" stroke="#FFFFFF" stroke-opacity="0.32" stroke-width="2" stroke-dasharray="10 14"/>
+    <path d="M215 98V215L302 267" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="215" cy="215" r="18" fill="#FFFFFF"/>
+  </g>
+  <g fill="#FFFFFF">
+    <text x="82" y="120" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="5" opacity="0.72">BASE SEPOLIA DEMO</text>
+    <text x="78" y="260" font-family="Arial, sans-serif" font-size="82" font-weight="800">INSTANT</text>
+    <text x="78" y="350" font-family="Arial, sans-serif" font-size="82" font-weight="800">MATURITY</text>
+    <text x="84" y="416" font-family="Arial, sans-serif" font-size="28" font-weight="600" opacity="0.8">Accelerated settlement scenario</text>
+  </g>
+  <g transform="translate(82 510)">
+    <rect width="370" height="84" rx="42" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-opacity="0.35"/>
+    <circle cx="47" cy="42" r="18" fill="#67E8F9"/>
+    <text x="82" y="51" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="27" font-weight="700">1 MINUTE PERIODS</text>
+  </g>
+</svg>

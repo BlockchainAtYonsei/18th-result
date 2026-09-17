@@ -1,0 +1,18 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.iml
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Generated local contract artifacts
+/contracts/deployments/*.json
+/frontend/src/generated/contracts/
+/backend/src/main/resources/contracts/generated/

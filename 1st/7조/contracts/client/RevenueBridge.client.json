@@ -1,0 +1,39 @@
+{
+  "offeringStatuses": [
+    { "value": 0, "name": "None", "label": "존재하지 않음" },
+    { "value": 1, "name": "Funding", "label": "모집 중" },
+    { "value": 2, "name": "Active", "label": "모집 완료" },
+    { "value": 3, "name": "Failed", "label": "모집 실패" },
+    { "value": 4, "name": "Settling", "label": "정산 중" },
+    { "value": 5, "name": "Closed", "label": "종료" }
+  ],
+  "errorMessages": {
+    "InvalidAddress": "유효하지 않은 주소입니다.",
+    "InvalidOfferingTerms": "상품 조건이 유효하지 않습니다.",
+    "InvalidSettlementPeriods": "정산 기간 설정이 유효하지 않습니다.",
+    "OfferingNotFound": "상품을 찾을 수 없습니다.",
+    "InvalidOfferingStatus": "현재 상품 상태에서는 이 작업을 실행할 수 없습니다.",
+    "IntakePaused": "현재 신규 상품과 투자가 일시 중지되었습니다.",
+    "InvestorNotAllowed": "투자 허용 목록에 등록되지 않은 지갑입니다.",
+    "InvalidUnits": "투자 수량은 0보다 커야 합니다.",
+    "FundingClosed": "모집이 종료된 상품입니다.",
+    "FundingStillOpen": "아직 모집 기간이 끝나지 않았습니다.",
+    "OfferingCapacityExceeded": "남은 모집 수량을 초과했습니다.",
+    "SettlementTokenAmountMismatch": "요청한 금액과 실제 토큰 이동 금액이 일치하지 않습니다.",
+    "UnauthorizedCreator": "선지급금을 받을 수 있는 크리에이터 지갑이 아닙니다.",
+    "AdvanceAlreadyWithdrawn": "선지급금이 이미 지급되었습니다.",
+    "NothingToRefund": "환불할 투자금이 없습니다.",
+    "InvalidSettlementStatus": "현재 상품 상태에서는 정산 작업을 실행할 수 없습니다.",
+    "InvalidPeriodIndex": "처리할 수 없는 정산 기간입니다.",
+    "SettlementPeriodStillOpen": "아직 정산 기간이 끝나지 않았습니다.",
+    "InvalidEvidenceHash": "정산 증빙 해시가 필요합니다.",
+    "NothingToClaim": "현재 청구할 수익이 없습니다.",
+    "SettlementPeriodsRemaining": "아직 처리하지 않은 정산 기간이 남아 있습니다.",
+    "AccessControlUnauthorizedAccount": "이 작업을 실행할 권한이 없습니다.",
+    "ReentrancyGuardReentrantCall": "중복된 컨트랙트 호출이 차단되었습니다.",
+    "SafeERC20FailedOperation": "정산 토큰 전송에 실패했습니다.",
+    "TransfersDisabled": "수익권은 다른 지갑으로 전송할 수 없습니다.",
+    "UnauthorizedController": "수익권을 발행하거나 소각할 권한이 없습니다.",
+    "InvalidController": "수익권 컨트랙트의 제어자 주소가 유효하지 않습니다."
+  }
+}
