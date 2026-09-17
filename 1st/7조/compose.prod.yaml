@@ -1,0 +1,84 @@
+name: creator-revenue-bridge
+
+services:
+  frontend:
+    image: ${FRONTEND_IMAGE:-ghcr.io/baypeline/creator-revenue-bridge-frontend}:${IMAGE_TAG:?IMAGE_TAG must be set}
+    environment:
+      APP_REVISION: ${IMAGE_TAG}
+      HOSTNAME: 0.0.0.0
+      NODE_ENV: production
+      PORT: 3000
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${FRONTEND_PORT:-5386}:3000"
+    init: true
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  backend:
+    image: ${BACKEND_IMAGE:-ghcr.io/baypeline/creator-revenue-bridge-backend}:${IMAGE_TAG:?IMAGE_TAG must be set}
+    environment:
+      APP_REVISION: ${IMAGE_TAG}
+      CRB_CORS_ALLOWED_ORIGINS: ${CRB_CORS_ALLOWED_ORIGINS:-https://pricetext.store}
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/${DATABASE_NAME:-creator_revenue_bridge}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USER:-crb}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set for production}
+      WEB3_RPC_URL: ${WEB3_RPC_URL:?WEB3_RPC_URL must be set for production}
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${BACKEND_PORT:-8081}:8080"
+    init: true
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "--show-error", "http://127.0.0.1:8080/api/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 20s
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  database:
+    image: postgres:17.6-alpine
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-creator_revenue_bridge}
+      POSTGRES_USER: ${DATABASE_USER:-crb}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD must be set for production}
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-crb} -d ${DATABASE_NAME:-creator_revenue_bridge}"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  database_data:

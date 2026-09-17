@@ -1,0 +1,26 @@
+{
+  "accounts": {
+    "admin": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "creator": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+    "investor": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+    "issuer": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "settler": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+  },
+  "chainId": 31337,
+  "contracts": {
+    "revenueBridge": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "revenueRightToken": "0xCafac3dD18aC6c6e92c921884f9E4176737C052c",
+    "settlementToken": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+  },
+  "demo": {
+    "fundingDeadline": 1790143703,
+    "offeringId": 1,
+    "revenueEnd": 1798006103,
+    "revenueShareBps": 2000,
+    "revenueStart": 1790230103,
+    "targetRaise": 10000000000,
+    "unitPrice": 100000000,
+    "unitsForSale": 100
+  },
+  "network": "ci-anvil"
+}

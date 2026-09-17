@@ -1,0 +1,20 @@
+{
+  "chainId": 84532,
+  "contracts": {
+    "demoFactory": "0x44bb48C3b2e5a87B003FEF2762CcFe6C8e19b0Fa",
+    "revenueBridge": "0x8F729432357A4bf1CF415B1C674db05393Ca00dc",
+    "revenueBridgeDeployer": "0xF17AffdD663E17770451867702479f189c97C7b9",
+    "revenueRightToken": "0x9399A111f01cD471E6a18274eA8Bd305FBFC3b10",
+    "revenueRightTokenFactory": "0x80082AF747215210FB81948b96781317087ae5d5",
+    "settlementToken": "0x57667F6ace1F6Fa71BFF1123404aA509Fa1ffE73"
+  },
+  "deployer": "0x3072243A09f4cc410d9D105605Ff8b9C9AcD10e3",
+  "network": "base-sepolia",
+  "roles": {
+    "admin": "0x3072243A09f4cc410d9D105605Ff8b9C9AcD10e3",
+    "issuer": "0x3072243A09f4cc410d9D105605Ff8b9C9AcD10e3",
+    "settler": "0x3072243A09f4cc410d9D105605Ff8b9C9AcD10e3"
+  },
+  "tokenBaseUri": "https://pricetext.store/api/revenue-rights/{id}.json",
+  "usesMockSettlementToken": true
+}

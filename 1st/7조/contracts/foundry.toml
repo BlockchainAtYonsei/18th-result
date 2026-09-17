@@ -1,0 +1,17 @@
+[profile.default]
+src = "src"
+test = "test"
+script = "script"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.30"
+fs_permissions = [
+    { access = "read", path = "./client" },
+    { access = "read-write", path = "./deployments" },
+    { access = "read-write", path = "./cache" },
+]
+
+[invariant]
+runs = 128
+depth = 64
+fail_on_revert = true
