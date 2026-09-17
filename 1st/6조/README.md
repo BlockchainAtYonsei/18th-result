@@ -14,7 +14,6 @@
 
 - 리서치 아티클: https://www.notion.so/3d68f1ec11b48040b094e4aa39df8692
 - 프로젝트 진행 보고서: https://www.notion.so/3de8f1ec11b4813b8e65ede25a589332
-- 발표 자료: `<TBD>`
 - 배포된 데모: https://jaesimin0903.github.io/xls6566-lending-demo/ , https://xls6566-evm.vercel.app/
 - 원본 저장소:
   - https://github.com/YoonMin02/xls65-66-evm
@@ -23,18 +22,7 @@
 
 ## 배포된 컨트랙트
 
-두 EVM 구현 모두 고정 주소 파일이 없다. `xls65-66-evm`에는 `public/deployment.json`이 없고, 프론트가 Sepolia에서 비교용 Vault/Broker를 브라우저마다 새로 배포한다. `xls6566-evm`도 데모 앱이 Sepolia에 컨트랙트를 배포하며 `docs/`, `app/`, README에 고정 Sepolia 주소가 없다. `lending-demo`는 XRPL Devnet 네이티브 트랜잭션 데모라 EVM 주소가 없다.
-
-| 구현 | 네트워크 | 컨트랙트 | 주소 |
-| --- | --- | --- | --- |
-| `xls65-66-evm` | Sepolia | MockUSDC | `<TBD>` (브라우저 배포) |
-| `xls65-66-evm` | Sepolia | XLS65Vault (baseline / harness) | `<TBD>` (브라우저 배포) |
-| `xls65-66-evm` | Sepolia | XLS66LoanBroker | `<TBD>` (브라우저 배포) |
-| `xls65-66-evm` | Sepolia | XLS66LoanBrokerHarness | `<TBD>` (브라우저 배포) |
-| `xls6566-evm` | Sepolia | DemoUSD (dUSD) | `<TBD>` (브라우저 배포) |
-| `xls6566-evm` | Sepolia | Vault | `<TBD>` (브라우저 배포) |
-| `xls6566-evm` | Sepolia | LoanBroker | `<TBD>` (브라우저 배포) |
-| `xls6566-evm` | Sepolia | LoanBrokerHarness | `<TBD>` (브라우저 배포) |
+두 EVM 구현 모두 고정 주소가 없다. 프론트가 Sepolia에서 Vault/Broker를 브라우저마다 새로 배포하고, 주소는 그 브라우저에만 남는다. `lending-demo`는 XRPL Devnet 네이티브 트랜잭션이라 EVM 주소가 없다.
 
 공개 RPC: `https://ethereum-sepolia-rpc.publicnode.com` (`xls65-66-evm`), API 키가 없는 공개 엔드포인트만 사용한다.
 
