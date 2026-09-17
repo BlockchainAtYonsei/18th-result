@@ -130,7 +130,7 @@ contract XLS65Vault is ERC20, ReentrancyGuard {
 
     function convertToShares(uint256 assets) public view returns (uint256) {
         if (totalSupply() == 0) return assets;
-        return assets * totalSupply() / assetsTotal;
+        return assets * totalSupply() / assetsTotal; // deposit price intentionally ignores paper loss
     }
 
     function convertToAssets(uint256 shares) public view returns (uint256) {
@@ -153,6 +153,7 @@ contract XLS65Vault is ERC20, ReentrancyGuard {
         shares = convertToShares(requestedAssets);
         if (shares == 0) revert PrecisionLoss();
 
+        // XLS-65 recalculates the asset debit after rounding shares down.
         uint256 assets = totalSupply() == 0 ? requestedAssets : _ceilDiv(shares * assetsTotal, totalSupply());
         if (assetsMaximum != 0 && assetsTotal + assets > assetsMaximum) revert CapExceeded();
 
@@ -167,6 +168,7 @@ contract XLS65Vault is ERC20, ReentrancyGuard {
     function redeem(uint256 shares, address receiver) public nonReentrant returns (uint256 assets) {
         if (shares == 0 || receiver == address(0)) revert InvalidAmount();
         if (balanceOf(msg.sender) < shares) revert InsufficientShares();
+        // XLS-65 gives a sole shareholder the full value, without the paper-loss deduction.
         assets = shares == totalSupply() ? shares * assetsTotal / totalSupply() : convertToAssets(shares);
         if (assets > assetsAvailable) revert InsufficientLiquidity();
         _burn(msg.sender, shares);
@@ -180,6 +182,7 @@ contract XLS65Vault is ERC20, ReentrancyGuard {
 
     function withdraw(uint256 requestedAssets, address receiver) external returns (uint256 assets, uint256 shares) {
         if (requestedAssets == 0 || effectiveAssets() == 0) revert InvalidAmount();
+        // XLS-65 rounds the share quote to nearest, then derives the actual payout.
         uint256 numerator = requestedAssets * totalSupply();
         uint256 denominator = effectiveAssets();
         shares = (numerator + denominator / 2) / denominator;
@@ -187,6 +190,7 @@ contract XLS65Vault is ERC20, ReentrancyGuard {
         assets = redeem(shares, receiver);
     }
 
+    /// @dev Called by the permanently bound XLS-66 broker when principal leaves the vault.
     function protocolLoan(
         uint256 principal,
         uint256 netInterest,
