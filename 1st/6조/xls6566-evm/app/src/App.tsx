@@ -54,7 +54,7 @@ const SCENARIOS: Array<{
 }> = [
   {
     id: "A", title: "정상 렌딩", steps: 6, harness: false, coverHint: true,
-    blurb: <>차입자가 원리금을 분할 상환합니다. 예금자는 이자가 붙은 몹을 전액 인출합니다.</>,
+    blurb: <>차입자가 원리금을 분할 상환합니다. 예금자는 이자가 붙은 몫을 전액 인출합니다.</>,
     summary: () => [["예치", `${n(P.deposit)} dUSD`], ["대출 · 이자", `${n(P.principal)} · 연 ${P.interestPct}%`], ["first-loss cover", n(P.cover)]],
     fields: ["deposit", "principal", "cover", "interestPct", "payments", "covMinPct"],
     fixed: () => [["상환 주기", "30일 (이자 계산 기준)"], ["상환 대기", "없음 — 회차를 연속으로 상환"]],
@@ -127,7 +127,7 @@ export default function App() {
 
       <div className="hero">
         <div className="eyebrow">XLS-65 SINGLE ASSET VAULT · XLS-66 LENDING PROTOCOL</div>
-        <h2>Vault 렌딩에서 돈이 어떻게 흘르는가</h2>
+        <h2>Vault 렌딩에서 돈이 어떻게 흐르는가</h2>
         <p className="mut" style={{ maxWidth: 660, margin: "0 auto" }}>
           예금자·브로커·차입자가 <b>각자 별도 계정</b>으로 실제 Sepolia 트랜잭션을 주고받습니다.
           숫자는 온체인에서 읽어온 실제 잔액입니다. 세 역할 지갑은 앱이 만들어 자동 서명(AUTO)하고,
