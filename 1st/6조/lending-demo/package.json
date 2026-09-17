@@ -1,0 +1,34 @@
+{
+  "name": "xls6566-lending-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "probe": "tsx scripts/probe-env.ts",
+    "scenario": "tsx scripts/run-scenario.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "ripple-binary-codec": "2.11.0-beta.0",
+    "ripple-keypairs": "3.0.0",
+    "tsx": "^4.23.13",
+    "xrpl": "5.2.0-beta.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^4.1.11"
+  }
+}
