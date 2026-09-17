@@ -42,11 +42,18 @@ function groupIntegerPart(value: string): string {
 }
 
 export interface XrpFormatOptions {
+  /** Maximum fraction digits kept. Default 6, the full drop precision. */
   maxDecimals?: number;
+  /** Minimum fraction digits kept, zero-padded. Default 0. */
   minDecimals?: number;
+  /** Prefix a `+` on positive values. */
   signed?: boolean;
 }
 
+/**
+ * Raw drops -> the string shown on screen, e.g. `39000008` -> `39.000008`.
+ * Trailing zeros beyond `minDecimals` are dropped so whole amounts stay readable.
+ */
 export function formatXrp(
   drops: string | number | null | undefined,
   options: XrpFormatOptions = {},
@@ -80,6 +87,7 @@ export function formatXrp(
   return options.signed && body !== '0' ? `+${body}` : body;
 }
 
+/** Signed difference in drops, or null when either reading is missing. */
 export function dropsDelta(
   fromDrops: string | null | undefined,
   toDrops: string | null | undefined,
@@ -94,6 +102,7 @@ export function dropsDelta(
   }
 }
 
+/** Difference of two raw drops readings, formatted with an explicit sign. */
 export function formatXrpDelta(
   fromDrops: string | null | undefined,
   toDrops: string | null | undefined,
@@ -103,6 +112,12 @@ export function formatXrpDelta(
   return delta === null ? EMPTY : formatXrp(delta, { signed: true, ...options });
 }
 
+/**
+ * Raw drops as a grouped integer, e.g. `78000000` -> `78,000,000 drops`.
+ *
+ * AC1 is judged in drops (`docs/decisions.md` D15): 60 seconds of interest on 39 XRP is
+ * 8 drops, so rounding to XRP erases the very number the demo is about.
+ */
 export function formatDrops(
   drops: string | number | null | undefined,
   options: { signed?: boolean; unit?: boolean } = {},
@@ -119,6 +134,7 @@ export function formatDrops(
   return options.unit === false ? signed : `${signed} drops`;
 }
 
+/** `10000` (1/10th basis points) -> `10%`. */
 export function formatRate(rate: number | null | undefined): string {
   if (rate === null || rate === undefined || !Number.isFinite(rate)) {
     return EMPTY;
@@ -127,6 +143,7 @@ export function formatRate(rate: number | null | undefined): string {
   return `${Math.round(percent * 1000) / 1000}%`;
 }
 
+/** Seconds -> `m:ss`, the countdown format the mockups use. */
 export function formatCountdown(seconds: number): string {
   const total = Math.max(0, Math.ceil(seconds));
   const minutes = Math.floor(total / 60);
@@ -134,6 +151,7 @@ export function formatCountdown(seconds: number): string {
   return `${minutes}:${String(rest).padStart(2, '0')}`;
 }
 
+/** Milliseconds -> `m분 s초`, used for the AC4 stopwatch line. */
 export function formatDuration(ms: number): string {
   const total = Math.max(0, Math.round(ms / 1000));
   const minutes = Math.floor(total / 60);
@@ -141,6 +159,7 @@ export function formatDuration(ms: number): string {
   return minutes > 0 ? `${minutes}분 ${seconds}초` : `${seconds}초`;
 }
 
+/** Ripple seconds -> a local `HH:MM:SS` clock reading. */
 export function formatRippleClock(rippleSeconds: number | null | undefined): string {
   if (
     rippleSeconds === null ||
@@ -176,6 +195,7 @@ export function formatLedgerIndex(index: number | null | undefined): string {
   return groupIntegerPart(String(Math.trunc(index)));
 }
 
+/** Read a ledger field as a string, or null when the field is absent. */
 export function rawField(record: Record<string, unknown> | null, name: string): string | null {
   if (!record) {
     return null;
@@ -184,6 +204,7 @@ export function rawField(record: Record<string, unknown> | null, name: string): 
   return value === undefined || value === null ? null : String(value);
 }
 
+/** Read a ledger field as a number, or null when the field is absent. */
 export function rawNumber(record: Record<string, unknown> | null, name: string): number | null {
   const value = rawField(record, name);
   if (value === null) {
@@ -193,6 +214,11 @@ export function rawNumber(record: Record<string, unknown> | null, name: string):
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+/**
+ * An amount field that rippled omits when it is zero (`AssetsTotal`,
+ * `CoverAvailable`, `LossUnrealized`, ...). Absent reads as `'0'` once the object
+ * itself exists.
+ */
 export function amountField(record: Record<string, unknown> | null, name: string): string | null {
   if (!record) {
     return null;
@@ -200,6 +226,14 @@ export function amountField(record: Record<string, unknown> | null, name: string
   return rawField(record, name) ?? '0';
 }
 
+/**
+ * Vault shares as a bare grouped integer, e.g. `78000000` -> `78,000,000`.
+ *
+ * The ledger panel is 320px wide and a "이전 값 → 현재 값" diff prints the number twice,
+ * so neither the `shares` unit nor the `(= N XRP)` tail that `formatShares` adds fits
+ * there. The row key names the unit, and `Vault.AssetsTotal` sits a few rows above in
+ * XRP, so nothing is lost.
+ */
 export function formatShareCount(shares: string | number | null | undefined): string {
   if (shares === null || shares === undefined || shares === '') {
     return EMPTY;
@@ -211,6 +245,10 @@ export function formatShareCount(shares: string | number | null | undefined): st
   return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+/**
+ * Vault share balance (MPT units; 1 share == 1 drop of the asset at issuance) ->
+ * `78,000,000 shares (= 78 XRP)`. Keeps the raw unit visible next to the XRP-equivalent.
+ */
 export function formatShares(shares: string | number | null | undefined): string {
   if (shares === null || shares === undefined || shares === '') {
     return EMPTY;
