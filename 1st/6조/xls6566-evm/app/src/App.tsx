@@ -26,20 +26,3 @@ export function StatGrid({ snap }: { snap: Snapshot }) {
     </div>
   );
 }
-
-const FIELD: Record<keyof Params, { label: string; hint: string }> = {
-  deposit: { label: "예치 (dUSD)", hint: "예금자가 Vault에" },
-  principal: { label: "대출 원금 (dUSD)", hint: "차입자가 빌림" },
-  cover: { label: "first-loss cover (dUSD)", hint: "브로커 완충자본" },
-  interestPct: { label: "이자율 (연 %)", hint: "0~100" },
-  payments: { label: "상환 횟수", hint: "분할상환 횟수" },
-  interval: { label: "연체 주기 (초)", hint: "이 시간 지나면 연체" },
-  grace: { label: "유예 기간 (초)", hint: "이후 default 가능" },
-  covMinPct: { label: "CoverRateMinimum (%)", hint: "부채 대비 최소 cover" },
-  covLiqPct: { label: "CoverRateLiquidation (%)", hint: "default 시 흡수 비율" },
-};
-
-type Lending = ReturnType<typeof useLending>;
-type Rows = [string, string][];
-const n = (v: number) => v.toLocaleString();
-const P = DEFAULT_PARAMS;
