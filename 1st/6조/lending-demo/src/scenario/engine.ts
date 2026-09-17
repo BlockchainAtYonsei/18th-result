@@ -24,15 +24,19 @@ export interface EngineHooks {
   onStepResult?(step: StepDef, result: TxResult, snapshot: LedgerSnapshot): void;
   onStepFailed?(step: StepDef, error: unknown): void;
   onSnapshot?(snapshot: LedgerSnapshot): void;
+  /** Fired about once a second while a gate is closed. */
   onGateTick?(step: StepDef, remainingSeconds: number, unlockAtRipple: number): void;
   onNotice?(message: string): void;
+  /** An `expect` violation. Non-fatal by design: the raw ledger stays the evidence. */
   onExpectViolation?(step: StepDef, message: string): void;
 }
 
 export interface EngineOptions {
   hooks?: EngineHooks;
   submit?: Omit<SubmitOptions, 'client'>;
+  /** How often to re-check a closed gate, ms. */
   gatePollMs?: number;
+  /** Overridable for tests; defaults to the ledger anchor published by `client.ts`. */
   readAnchor?(ctx: ScenarioCtx): Promise<LedgerAnchor>;
 }
 
@@ -40,10 +44,12 @@ export interface StepOutcome {
   step: StepDef;
   result: TxResult;
   snapshot: LedgerSnapshot;
+  /** `expect` violations, kept as warnings rather than aborting the run. */
   warnings: string[];
   gateWaitedMs: number;
 }
 
+/** Read a validated close time. Prefers the live stream anchor, falls back to `ledger`. */
 async function defaultReadAnchor(ctx: ScenarioCtx): Promise<LedgerAnchor> {
   const streamed = getLatestAnchor();
   if (streamed) {
@@ -197,6 +203,10 @@ export async function runStep(
   }
 }
 
+/**
+ * Run a step, and on failure fall through to its `recover` alternatives in order.
+ * Recovery is explicit and finite - there is no blind retry of the same transaction.
+ */
 export async function runStepWithRecovery(
   ctx: ScenarioCtx,
   step: StepDef,
@@ -229,6 +239,7 @@ export async function runStepWithRecovery(
   }
 }
 
+/** Run every step in order. Stops at the first failure - a spike must not paper over one. */
 export async function runScenario(
   ctx: ScenarioCtx,
   steps: readonly StepDef[],
