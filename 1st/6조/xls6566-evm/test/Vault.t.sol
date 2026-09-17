@@ -47,6 +47,10 @@ contract VaultTest is Test {
         shares = vault.deposit(amount, who);
     }
 
+    // -----------------------------------------------------------------
+    // Basic roundtrip
+    // -----------------------------------------------------------------
+
     function test_depositWithdrawRoundtrip() public {
         uint256 shares = _deposit(alice, 1000 * UNIT);
         assertGt(shares, 0);
@@ -56,6 +60,10 @@ contract VaultTest is Test {
         uint256 got = vault.redeem(shares, alice, alice);
         assertApproxEqRel(got, 1000 * UNIT, TOL, "roundtrip returns ~deposit");
     }
+
+    // -----------------------------------------------------------------
+    // Two-view accounting: assetsAvailable vs totalAssets
+    // -----------------------------------------------------------------
 
     function test_lendOut_splitsAvailableFromTotal() public {
         _deposit(alice, 1000 * UNIT);
@@ -101,6 +109,10 @@ contract VaultTest is Test {
         uint256 got = vault.redeem(shares, alice, alice);
         assertApproxEqRel(got, 1060 * UNIT, TOL, "sole depositor earns the interest");
     }
+
+    // -----------------------------------------------------------------
+    // Loss asymmetry (the core XLS-65 §6 defense)
+    // -----------------------------------------------------------------
 
     /// Depositing into an impaired vault gives NO discount: an immediate redeem loses value.
     function test_lossAsymmetry_noArbitrageForNewDepositor() public {
@@ -154,6 +166,10 @@ contract VaultTest is Test {
         assertApproxEqRel(got, 1000 * UNIT, TOL, "sole holder gets full value");
     }
 
+    // -----------------------------------------------------------------
+    // Access control
+    // -----------------------------------------------------------------
+
     function test_privateVault_depositGating() public {
         Vault pv =
             new Vault(IERC20(address(asset)), "Private", "pv", admin, true, 0, OFFSET);
@@ -197,6 +213,10 @@ contract VaultTest is Test {
         vm.expectRevert();
         vault.increaseLoss(100 * UNIT);
     }
+
+    // -----------------------------------------------------------------
+    // Default write-down
+    // -----------------------------------------------------------------
 
     function test_writeDown_realizesLossToDepositors() public {
         uint256 shares = _deposit(alice, 1000 * UNIT);
