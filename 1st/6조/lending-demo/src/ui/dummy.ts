@@ -361,7 +361,7 @@ export const DUMMY_LANDING: LandingVM = {
     {
       title: 'A · 정상 렌딩',
       badge: { text: '8단계 · 약 3분', tone: 'good' },
-      description: '예금자가 Vault에 예치하고, 차입자가 빌린 뒤 이자를 엎어 갚습니다. 예금자는 이자를 받고 전량 인출합니다.',
+      description: '예금자가 Vault에 예치하고, 차입자가 빌린 뒤 이자를 엎어 걡습니다. 예금자는 이자를 받고 전량 인출합니다.',
       rows: [
         ['예치', '1,000 XRP'],
         ['대출 · 이자', '500 XRP · 10%'],
@@ -372,7 +372,7 @@ export const DUMMY_LANDING: LandingVM = {
     {
       title: 'B · 부실 후 default',
       badge: { text: '9단계 · 약 5분', tone: 'crit' },
-      description: '차입자가 갚지 않습니다. Broker의 cover 50 XRP가 먼저 소진되고, 나머지 손실은 Vault 예금자가 떠안습니다.',
+      description: '차입자가 걡지 않습니다. Broker의 cover 50 XRP가 먼저 소진되고, 나머지 손실은 Vault 예금자가 떠안습니다.',
       rows: [
         ['예치 · cover', '1,000 · 50 XRP'],
         ['CoverRate min · liq', '10% · 100%'],
@@ -596,7 +596,7 @@ export const DUMMY_STEP5: MainScreenVM = mainScreen({
   footer: { kind: 'action', label: '500 XRP 대출 실행', state: 'enabled' },
   stage: {
     title: 'Cover 50 XRP가 예치되었습니다',
-    note: '이 50 XRP가 default 시 가장 먼저 사라지는 돈입니다. 대출 500에 대한 최소치를 정확히 맞추었습니다.',
+    note: '이 50 XRP가 default 시 가장 먼저 사라지는 돈입니다. 대출 500에 대한 최소치를 정확히 맞추습니다.',
     nodes: {
       depositor: depNode('1,000', '≈ 1,000'),
       vault: vaultNode(['1,000'], ['1,000'], ['0']),
@@ -696,7 +696,7 @@ export const DUMMY_B7: MainScreenVM = mainScreen({
   description: '납부기한 60초와 유예 60초는 스펙 최소값입니다. 이 시간이 지나기 전에는 rippled가 default를 거부합니다.',
   footer: { kind: 'action', label: 'Default 실행', state: 'disabled', countdown: '1:12' },
   stage: {
-    title: '차입자가 갚지 않고 있습니다',
+    title: '차입자가 걡지 않고 있습니다',
     note: 'Impair로 Vault에 미실현 손실 500.14가 잡혔습니다. 지금 인출하는 예금자도 손실을 피할 수 없습니다.',
     nodes: {
       depositor: depNode('1,000', '≈ 500', { accent: 'loss', wColor: '#B3261E' }),
@@ -778,7 +778,7 @@ export const DUMMY_B8: MainScreenVM = mainScreen({
         rows: [diff('CoverAvailable', '50', '0'), diff('DebtTotal', '500.14', '0')],
       }),
       brokerAccount: brkAcctNode('9,949.99'),
-      borrower: borNode('+500', '갚지 않고 보유', [{ text: 'Loan' }, { text: 'lsfLoanDefault', mono: true, tone: 'down' }], {
+      borrower: borNode('+500', '걡지 않고 보유', [{ text: 'Loan' }, { text: 'lsfLoanDefault', mono: true, tone: 'down' }], {
         bigTone: 'up',
       }),
       loan: loanCard(
@@ -865,7 +865,7 @@ export const DUMMY_B9: MainScreenVM = mainScreen({
       vault: vaultNode(['0', 'down'], ['0'], ['0'], { pill: { text: 'EMPTY', tone: 'none' } }),
       broker: brokerNode(['0', 'dim'], ['0', 'dim']),
       brokerAccount: brkAcctNode('9,949.99'),
-      borrower: borNode('+500', '갚지 않고 보유', [{ text: 'Loan' }, { text: 'lsfLoanDefault', mono: true, tone: 'down' }], {
+      borrower: borNode('+500', '걡지 않고 보유', [{ text: 'Loan' }, { text: 'lsfLoanDefault', mono: true, tone: 'down' }], {
         bigTone: 'up',
       }),
       loan: loanCard({ text: 'DEFAULTED', tone: 'crit' }, [
@@ -922,7 +922,7 @@ export const DUMMY_A6: MainScreenVM = mainScreen({
   scenarioLabel: SA,
   ledgerIndex: '9,812,301',
   steps: buildSteps(STEPS_A, 7),
-  description: '차입자가 원금 500과 이자 0.14를 한 번에 갚습니다. 납부기한 전에 보내야 연체 없이 통과합니다.',
+  description: '차입자가 원금 500과 이자 0.14를 한 번에 걡습니다. 납부기한 전에 보내야 연체 없이 통과합니다.',
   footer: { kind: 'action', label: '전액 상환', state: 'enabled', countdown: '0:47' },
   stage: loanSetStage,
   ledgerSections: loanSetPanel,
@@ -940,7 +940,7 @@ export const DUMMY_A7: MainScreenVM = mainScreen({
   description: '예금자가 share 전량을 인출합니다. 이자가 붙은 만큼 예치액보다 많이 받습니다. 지갑 서명이 필요합니다.',
   footer: { kind: 'action', label: '전량 인출 (지갑 서명)', state: 'enabled' },
   stage: {
-    title: '차입자가 원금과 이자를 모두 갚았습니다',
+    title: '차입자가 원금과 이자를 모두 걡았습니다',
     note: '500.14 XRP가 Vault로 돌아왔습니다. Loan은 종료되고 Broker의 DebtTotal은 0입니다.',
     nodes: {
       depositor: depNode('1,000', '≈ 1,000.14', { accent: 'gain', wColor: '#1F7A4D' }),
