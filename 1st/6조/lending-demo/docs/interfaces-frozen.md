@@ -228,7 +228,7 @@ export function disconnectClient(): Promise<void>;
 재연결 시 rippled가 구독을 버리므로 `connected` 이벤트마다 `subscribe`를 다시 건다.
 
 **게이트와 표시의 분리 (R5)**
-- 게이트 판정은 검증된 `ledgerTime`만 쓠다. 브라우저 시계는 개입하지 않는다.
+- 게이트 판정은 검증된 `ledgerTime`만 쓴다. 브라우저 시계는 개입하지 않는다.
 - 표시용 잔여 시간은 `(perfNow 기준 경과) + ledgerTime`으로 보간한다.
 
 ```ts
@@ -329,7 +329,7 @@ P1 spike를 devnet에서 완주시키는 과정에서 아래 항목이 실제 �
 export interface StepDef {
   // ...
   signer: Role;
-  /** CounterpartySignature를 엇는 두 번째 서명자. 현재 LoanSet에만 쓠다. */
+  /** CounterpartySignature를 얹는 두 번째 서명자. 현재 LoanSet에만 쓴다. */
   coSigner?: Role;
   // ...
 }
@@ -371,7 +371,7 @@ export function redemptionOpensAtRipple(vault: VaultView): number;  // redemptio
 ```
 
 UI는 이 세 값으로 "예치 마감 / 대출 개시 / 출금 개시" 카운트다운을 그린다. 게이트 판정은
-`gateUnlocked(unlockAtRipple, validatedCloseTime)` 그대로이고 표시만 `displayRemaining`을 쓠다.
+`gateUnlocked(unlockAtRipple, validatedCloseTime)` 그대로이고 표시만 `displayRemaining`을 쓴다.
 
 ### 8.4 계획서 폴더 레이아웃과의 차이
 
