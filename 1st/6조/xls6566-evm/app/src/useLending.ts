@@ -248,7 +248,7 @@ export function useLending() {
     const p = paramsBy.B, c = client();
     setResult(null); setScenario("B");
     const loan = planB(p);
-    setScenarioSub("채무불이행 — 예금자가 손실을 밥니다");
+    setScenarioSub("채무불이행 — 예금자가 손실을 봅니다");
     setSteps(SCEN_B(p)); setStep(0);
     setRunning(true); setDefaulted(false);
     if (!(await precheck(p.cover, p.covMinPct, [loan], "B"))) { setRunning(false); return; }
@@ -386,7 +386,7 @@ function SCEN_A(p: Params): Step[] {
     { title: `예금자가 Vault에 ${p.deposit.toLocaleString()} 예치`, desc: "예금자가 유동성을 공급합니다. 예치액만큼 지갑에서 빠져 Vault 총자산이 되고, 그 지분(share)을 받습니다." },
     { title: `브로커가 first-loss cover ${p.cover.toLocaleString()} 적립`, desc: "브로커가 자기 자본을 완충용으로 넣습니다. 손실이 나면 이 돈이 예금자보다 먼저 소진됩니다(skin in the game)." },
     { title: `차입자가 ${p.principal.toLocaleString()} 대출`, desc: "차입자가 EIP-712로 대출 조건에 서명하고 브로커가 제출합니다(양자 합의). 원금이 Vault 유동자산에서 차입자로 이동하고 '대출중'으로 잡힙니다." },
-    { title: `차입자가 ${p.payments}회에 걸쳐 원리금 상환`, desc: "원리금균등상환. 매 회차 원금 일부 + 이자를 갑습니다. 원금은 Vault로 돌아오고, 이자(수수료 제외)는 예금자 몹으로 쌓입니다." },
+    { title: `차입자가 ${p.payments}회에 걸쳐 원리금 상환`, desc: "원리금균등상환. 매 회차 원금 일부 + 이자를 갚습니다. 원금은 Vault로 돌아오고, 이자(수수료 제외)는 예금자 몫으로 쌓입니다." },
     { title: `브로커가 cover ${p.cover.toLocaleString()} 회수`, desc: "정상 완납이라 손실이 없어, 브로커가 넣었던 완충자본을 그대로 회수합니다." },
     { title: "예금자가 원금+이자 전액 인출", desc: "예금자가 share를 반납하고 예치금 + 쌓인 이자를 인출합니다. 지갑 잔액이 예치 전보다 늘어납니다." },
   ];
@@ -395,7 +395,7 @@ function SCEN_B(p: Params): Step[] {
   return [
     { title: `예금자가 Vault에 ${p.deposit.toLocaleString()} 예치`, desc: "예금자가 유동성을 공급합니다. 이 돈이 대출 재원이 됩니다." },
     { title: `브로커가 cover ${p.cover.toLocaleString()} 적립`, desc: "완충자본을 넣지만, 이 시나리오에서는 손실보다 작게 설정되어 예금자도 손실을 나눠 집니다." },
-    { title: `차입자가 ${p.principal.toLocaleString()} 대출 — 그리고 갑지 않습니다`, desc: "원금이 차입자 지갑으로 이동합니다. 이후 차입자는 상환하지 않아 그 돈이 지갑에 그대로 남습니다." },
+    { title: `차입자가 ${p.principal.toLocaleString()} 대출 — 그리고 갚지 않습니다`, desc: "원금이 차입자 지갑으로 이동합니다. 이후 차입자는 상환하지 않아 그 돈이 지갑에 그대로 남습니다." },
     { title: "연체 → 브로커가 부실 표시(impair)", desc: "납기가 지나면 브로커가 부실을 표시합니다. Vault에 '미실현 손실'이 잡혀 예금자의 상환 가치가 즉시 낮아집니다." },
     { title: "유예기간 경과 → default (first-loss waterfall)", desc: "유예기간까지 지나면 채무불이행이 확정됩니다. cover가 먼저 소진되고(부채×CoverRateMinimum×CoverRateLiquidation 상한), 초과 손실은 예금자가 부담합니다." },
     { title: "예금자가 남은 금액만 인출 (손실 확정)", desc: "예금자는 줄어든 Vault 가치만큼만 돌려받습니다. 차입자 지갑에는 빌린 돈이 그대로 남아 있습니다(미상환)." },
@@ -412,7 +412,7 @@ function SCEN_C(p: Params, big: number): Step[] {
 function SCEN_D(): Step[] {
   return [
     { title: `예금자가 Vault에 ${D_CFG.deposit.toLocaleString()} 예치`, desc: "대출 재원을 공급합니다." },
-    { title: `브로커가 cover ${D_CFG.cover.toLocaleString()} 적립`, desc: "요구 비율이 올라가도 견딜 수 있도록 완충자본을 넙넁히 넣습니다." },
+    { title: `브로커가 cover ${D_CFG.cover.toLocaleString()} 적립`, desc: "요구 비율이 올라가도 견딜 수 있도록 완충자본을 넉넉히 넣습니다." },
     { title: `같은 기관이 대출 ${D_CFG.loans}건 실행 (각 ${D_CFG.each.toLocaleString()})`, desc: `실행 원금 누계 ${(D_CFG.each * D_CFG.loans).toLocaleString()}. 아직 디폴트가 없어 요구 CoverRateMinimum은 설정값 그대로입니다.` },
     { title: "1건 디폴트 → 요구 cover 비율(③) 자동 상향", desc: `디폴트율 = 디폴트/실행원금 = ${Math.round(100 / D_CFG.loans)}%. CRM_eff = max(CRM_set, CRM_floor + λ×디폴트율). 심사를 소홀히 한 기관일수록 다음 대출에 더 많은 cover를 요구받습니다.` },
   ];
