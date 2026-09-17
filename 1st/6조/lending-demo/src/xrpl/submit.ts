@@ -15,6 +15,7 @@ import type { Signer } from '../wallet/types.ts';
 
 export interface TxResult {
   hash: string;
+  /** Final `meta.TransactionResult` once validated; the provisional engine result otherwise. */
   engineResult: string;
   validated: boolean;
   ledgerIndex: number;
@@ -26,15 +27,21 @@ export interface TxResult {
 
 export interface SubmitOptions {
   client: Client;
+  /** Defaults to `() => null`: no explorer link is claimed until P1 verifies one works. */
   explorerTxUrl?: (hash: string) => string | null;
+  /** Validation poll interval, ms. Default 1000. */
   pollIntervalMs?: number;
+  /** Hard ceiling before giving up without an expiry verdict, ms. Default 120000. */
   maxWaitMs?: number;
+  /** Non-fatal diagnostics (e.g. a wallet-submitted tx that could not be reconciled). */
   onNotice?: (message: string) => void;
 }
 
+/** rippled rejected the submission outright (tem/tef/tel). Nothing reached the ledger. */
 export class TxSubmitError extends Error {
   readonly engineResult: string;
   readonly hash: string | null;
+
   constructor(engineResult: string, hash: string | null, message: string) {
     super(message);
     this.name = 'TxSubmitError';
@@ -43,9 +50,11 @@ export class TxSubmitError extends Error {
   }
 }
 
+/** LastLedgerSequence passed twice without validation. The step is `Failed`; offer `recover`. */
 export class TxExpiredError extends Error {
   readonly hash: string;
   readonly lastLedgerSequence: number;
+
   constructor(hash: string, lastLedgerSequence: number, message: string) {
     super(message);
     this.name = 'TxExpiredError';
@@ -54,8 +63,10 @@ export class TxExpiredError extends Error {
   }
 }
 
+/** Neither validated nor expired within `maxWaitMs`. Re-signing here would double-spend the sequence. */
 export class TxTimeoutError extends Error {
   readonly hash: string;
+
   constructor(hash: string, message: string) {
     super(message);
     this.name = 'TxTimeoutError';
@@ -108,6 +119,7 @@ function rippledErrorCode(error: unknown): string | null {
   return typeof code === 'string' ? code : null;
 }
 
+/** tem/tef/tel never reach the ledger. ter is retryable, tes/tec do reach it. */
 function isImmediateFailure(engineResult: string): boolean {
   return (
     engineResult.startsWith('tem') ||
@@ -131,6 +143,7 @@ async function lookupTx(client: Client, hash: string): Promise<TxLookup | null> 
   if (!result) {
     return null;
   }
+  // api_version 2 nests the transaction under tx_json; version 1 flattens it.
   const txJson = asRecord(result.tx_json) ?? result;
   const meta = result.meta ?? result.meta_blob ?? null;
   const metaRecord = asRecord(meta);
@@ -148,6 +161,10 @@ async function lookupTx(client: Client, hash: string): Promise<TxLookup | null> 
   };
 }
 
+/**
+ * The wallet already submitted, so the app's own autofill values may be wrong.
+ * Read the real Sequence / LastLedgerSequence back before judging expiry.
+ */
 async function reconcileSubmitted(
   client: Client,
   hash: string,
@@ -225,6 +242,7 @@ async function waitForValidation(
 
     const currentLedger = await client.getLedgerIndex();
     if (sent.lastLedgerSequence > 0 && currentLedger > sent.lastLedgerSequence) {
+      // One last read: the tx may have validated in the ledger we just crossed.
       const settled = await lookupTx(client, sent.hash);
       return settled?.validated ? { status: 'validated', lookup: settled } : { status: 'expired' };
     }
@@ -255,6 +273,11 @@ function toResult(
   };
 }
 
+/**
+ * Autofill, sign, submit and wait for validation. On LastLedgerSequence expiry the
+ * transaction is re-autofilled and re-signed exactly once (state `Resigning`, which the
+ * wallet path surfaces as a second approval popup). A second expiry throws.
+ */
 export async function submit(
   tx: Record<string, unknown>,
   signer: Signer,
