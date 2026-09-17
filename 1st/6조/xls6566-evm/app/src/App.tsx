@@ -9,12 +9,12 @@ const f2 = (v: number) => v.toLocaleString(undefined, { maximumFractionDigits: 2
  *  than as a row of seven and an orphan. */
 export function StatGrid({ snap }: { snap: Snapshot }) {
   const tiles: [string, string][] = [
-    ["Vault 총자산", f2(snap.vaultTotal)], ["대출중", f2(snap.onLoan)], ["미실현 손실", f2(snap.loss)],
-    ["Broker cover", f2(snap.cover)], ["예금자 인출가능", f2(snap.maxWithdraw)],
+    ["Vault \ucd1d\uc790\uc0b0", f2(snap.vaultTotal)], ["\ub300\ucd9c\uc911", f2(snap.onLoan)], ["\ubbf8\uc2e4\ud604 \uc190\uc2e4", f2(snap.loss)],
+    ["Broker cover", f2(snap.cover)], ["\uc608\uae08\uc790 \uc778\ucd9c\uac00\ub2a5", f2(snap.maxWithdraw)],
     ...(snap.harnessOn ? [
-      ["유효 CRM (③)", `${snap.effCrmPct.toFixed(0)}%`],
-      ["디폴트율", `${snap.defaultRatePct.toFixed(0)}%`],
-      ["cover 회수가능 (②)", f2(snap.coverWithdrawable)],
+      ["\uc720\ud6a8 CRM (\u2462)", `${snap.effCrmPct.toFixed(0)}%`],
+      ["\ub514\ud3f4\ud2b8\uc728", `${snap.defaultRatePct.toFixed(0)}%`],
+      ["cover \ud68c\uc218\uac00\ub2a5 (\u2461)", f2(snap.coverWithdrawable)],
     ] as [string, string][] : []),
   ];
   const cols = tiles.length > 5 ? Math.ceil(tiles.length / 2) : tiles.length;
@@ -26,15 +26,3 @@ export function StatGrid({ snap }: { snap: Snapshot }) {
     </div>
   );
 }
-
-const FIELD: Record<keyof Params, { label: string; hint: string }> = {
-  deposit: { label: "예치 (dUSD)", hint: "예금자가 Vault에" },
-  principal: { label: "대출 원금 (dUSD)", hint: "차입자가 빌림" },
-  cover: { label: "first-loss cover (dUSD)", hint: "브로커 완충자본" },
-  interestPct: { label: "이자율 (연 %)", hint: "0~100" },
-  payments: { label: "상환 횟수", hint: "분할상환 횟수" },
-  interval: { label: "연체 주기 (초)", hint: "이 시간 지나면 연체" },
-  grace: { label: "유예 기간 (초)", hint: "이후 default 가능" },
-  covMinPct: { label: "CoverRateMinimum (%)", hint: "부채 대비 최소 cover" },
-  covLiqPct: { label: "CoverRateLiquidation (%)", hint: "default 시 흡수 비율" },
-};
