@@ -69,7 +69,12 @@ contract ScenarioTest is Test {
         vm.stopPrank();
     }
 
+    // -----------------------------------------------------------------
+    // The scenario
+    // -----------------------------------------------------------------
+
     function test_endToEnd() public {
+        // 1. Both depositors fund the vault.
         vm.prank(dep1);
         vault.deposit(30_000 * UNIT, dep1);
         vm.prank(dep2);
@@ -77,16 +82,19 @@ contract ScenarioTest is Test {
         _checkAll();
         assertEq(vault.totalAssets(), 50_000 * UNIT);
 
+        // 2. Broker deposits first-loss capital.
         vm.prank(ownerOp);
         broker.coverDeposit(5_000 * UNIT);
         _checkAll();
 
+        // 3. Originate two loans.
         uint256 loan1 = _originate(pk1, bor1, 12_000 * UNIT);
         uint256 loan2 = _originate(pk2, bor2, 8_000 * UNIT);
         _checkAll();
         assertEq(vault.assetsOnLoan(), 20_000 * UNIT, "both principals lent");
         assertEq(vault.totalAssets(), 50_000 * UNIT, "total unchanged by lending");
 
+        // 4. Borrower 1 pays 4 installments on time.
         for (uint256 i = 0; i < 4; i++) {
             vm.warp(broker.getLoan(loan1).nextPaymentDueDate);
             vm.prank(bor1);
@@ -95,6 +103,7 @@ contract ScenarioTest is Test {
         }
         assertLt(broker.getLoan(loan1).principalOutstanding, 12_000 * UNIT, "loan1 amortizing");
 
+        // 5. Borrower 2 never pays and defaults after grace.
         LoanBroker.Loan memory l2 = broker.getLoan(loan2);
         vm.warp(uint256(l2.nextPaymentDueDate) + l2.gracePeriod + 1);
         uint256 coverBefore = broker.coverAvailable();
@@ -107,12 +116,14 @@ contract ScenarioTest is Test {
         uint256 depLoss = totalBefore - vault.totalAssets();
         assertApproxEqAbs(coverUsed + depLoss, 8_000 * UNIT, 1e12, "waterfall conserves loan2 principal");
 
+        // 6. Depositor 1 withdraws part of their position (liquidity permitting).
         uint256 maxW = vault.maxWithdraw(dep1);
         assertGt(maxW, 0);
         vm.prank(dep1);
         vault.withdraw(maxW / 2, dep1, dep1);
         _checkAll();
 
+        // 7. Finish loan1 to term.
         while (broker.getLoan(loan1).paymentsRemaining > 0) {
             vm.warp(broker.getLoan(loan1).nextPaymentDueDate);
             vm.prank(bor1);
@@ -123,24 +134,32 @@ contract ScenarioTest is Test {
         assertEq(vault.assetsOnLoan(), 0, "no loans outstanding");
     }
 
+    // -----------------------------------------------------------------
+    // Cross-contract accounting checks (run after every step)
+    // -----------------------------------------------------------------
+
     function _checkAll() internal view {
+        // Token conservation: nothing minted or burned outside setup.
         uint256 sum;
         for (uint256 i = 0; i < accounts.length; i++) {
             sum += token.balanceOf(accounts[i]);
         }
         assertEq(sum, totalMinted, "token conservation");
 
+        // Vault two-view identity.
         assertEq(
             vault.totalAssets(),
             token.balanceOf(address(vault)) + vault.assetsOnLoan(),
             "totalAssets = idle + onLoan"
         );
 
+        // assetsOnLoan equals the sum of active loan principals.
         uint256 principalSum;
         uint256 debtSum;
         for (uint256 id = 1; id <= broker.loanSequence(); id++) {
             LoanBroker.Loan memory l = broker.getLoan(id);
             if (l.status == 0 || l.status == 1) {
+                // ACTIVE or IMPAIRED
                 principalSum += l.principalOutstanding;
                 uint256 netInterest =
                     l.totalValueOutstanding - l.principalOutstanding - l.mgmtFeeOutstanding;
@@ -150,9 +169,16 @@ contract ScenarioTest is Test {
         assertEq(vault.assetsOnLoan(), principalSum, "onLoan = sum active principals");
         assertApproxEqAbs(broker.debtTotal(), debtSum, 1e12, "debtTotal = sum active debt");
 
+        // Broker holds at least its declared first-loss capital.
         assertGe(token.balanceOf(address(broker)), broker.coverAvailable(), "cover is backed");
+
+        // Unrealized loss never exceeds vault assets.
         assertLe(vault.lossUnrealized(), vault.totalAssets(), "loss bounded by assets");
     }
+
+    // -----------------------------------------------------------------
+    // Origination helper (EIP-712)
+    // -----------------------------------------------------------------
 
     function _originate(uint256 pk, address borrower, uint256 principal)
         internal
