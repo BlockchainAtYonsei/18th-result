@@ -84,6 +84,10 @@ abstract contract LendingDemo is Script {
         vm.stopPrank();
     }
 
+    // ------------------------------------------------------------------
+    // Actions
+    // ------------------------------------------------------------------
+
     function _deposit(address who, uint256 amt) internal {
         vm.prank(who);
         vault.deposit(amt, who);
@@ -158,6 +162,11 @@ abstract contract LendingDemo is Script {
         return abi.encodePacked(r, s, v);
     }
 
+    // ------------------------------------------------------------------
+    // Reporting
+    // ------------------------------------------------------------------
+
+    /// @dev Whole-token view (integer part) for readable logs.
     function _t(uint256 wad) internal pure returns (uint256) {
         return wad / UNIT;
     }
