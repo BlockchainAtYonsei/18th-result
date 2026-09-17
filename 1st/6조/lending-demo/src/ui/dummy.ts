@@ -361,7 +361,7 @@ export const DUMMY_LANDING: LandingVM = {
     {
       title: 'A · 정상 렌딩',
       badge: { text: '8단계 · 약 3분', tone: 'good' },
-      description: '예금자가 Vault에 예치하고, 차입자가 빌린 뒤 이자를 엉어 갚습니다. 예금자는 이자를 받고 전량 인출합니다.',
+      description: '예금자가 Vault에 예치하고, 차입자가 빌린 뒤 이자를 얹어 갚습니다. 예금자는 이자를 받고 전량 인출합니다.',
       rows: [
         ['예치', '1,000 XRP'],
         ['대출 · 이자', '500 XRP · 10%'],
@@ -554,7 +554,7 @@ export const DUMMY_STEP4: MainScreenVM = mainScreen({
   footer: { kind: 'action', label: 'Cover 50 XRP 예치', state: 'enabled' },
   stage: {
     title: 'Broker가 등록되었습니다',
-    note: 'CoverRateMinimum 10%: 대출 잔액의 10%를 cover로 유지해야 합니다. CoverRateLiquidation 100%: default 시 그 전액을 손실에 쓰니다.',
+    note: 'CoverRateMinimum 10%: 대출 잔액의 10%를 cover로 유지해야 합니다. CoverRateLiquidation 100%: default 시 그 전액을 손실에 씁니다.',
     nodes: {
       depositor: depNode('1,000', '≈ 1,000'),
       vault: vaultNode(['1,000'], ['1,000'], ['0']),
@@ -596,7 +596,7 @@ export const DUMMY_STEP5: MainScreenVM = mainScreen({
   footer: { kind: 'action', label: '500 XRP 대출 실행', state: 'enabled' },
   stage: {
     title: 'Cover 50 XRP가 예치되었습니다',
-    note: '이 50 XRP가 default 시 가장 먼저 사라지는 돈입니다. 대출 500에 대한 최소치를 정확히 맞춰습니다.',
+    note: '이 50 XRP가 default 시 가장 먼저 사라지는 돈입니다. 대출 500에 대한 최소치를 정확히 맞췄습니다.',
     nodes: {
       depositor: depNode('1,000', '≈ 1,000'),
       vault: vaultNode(['1,000'], ['1,000'], ['0']),
@@ -880,7 +880,7 @@ export const DUMMY_B9: MainScreenVM = mainScreen({
     extra: {
       kind: 'balanceSummary',
       columns: [
-        { label: '예치 전 줄액', value: '10,000.00' },
+        { label: '예치 전 잔액', value: '10,000.00' },
         { label: '예치 후', value: '9,000.00' },
         { label: '인출 후', value: '9,550.00', tone: 'down' },
       ],
@@ -1019,7 +1019,7 @@ export const DUMMY_A8: MainScreenVM = mainScreen({
     secondaryLabel: '시나리오 B 실행',
   },
   stage: {
-    title: '예금자가 이자를 엉어 전량 인출했습니다',
+    title: '예금자가 이자를 얹어 전량 인출했습니다',
     note: 'share 1,000개가 1,000.14 XRP로 바뀌었습니다. Vault는 비었고 Broker는 cover를 회수할 수 있습니다.',
     nodes: {
       depositor: depNode('+0.14', '', {
@@ -1050,7 +1050,7 @@ export const DUMMY_A8: MainScreenVM = mainScreen({
     extra: {
       kind: 'balanceSummary',
       columns: [
-        { label: '예치 전 줄액', value: '10,000.00' },
+        { label: '예치 전 잔액', value: '10,000.00' },
         { label: '예치 후', value: '9,000.00' },
         { label: '인출 후', value: '10,000.14', tone: 'up' },
       ],
