@@ -8,7 +8,7 @@ export const DEFAULT_PARAMS: Params = {
   payments: 3, interval: 40, grace: 20, covMinPct: 10, covLiqPct: 100,
 };
 
-export type NodeId = "dep" | "vault" | "broom" | "broker";
+export type NodeId = "dep" | "vault" | "bor" | "broker";
 
 export interface FlowEvent {
   from: NodeId; to: NodeId; text: string; cls?: "gain" | "loss" | ""; key: number;
