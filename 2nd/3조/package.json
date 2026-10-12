@@ -1,0 +1,22 @@
+{
+  "name": "moa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "3-of-5 multisig shared account monorepo",
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=22.10.0",
+    "pnpm": ">=11.0.0"
+  },
+  "scripts": {
+    "frontend:dev": "pnpm --filter @moa/frontend run dev",
+    "frontend:build": "pnpm --filter @moa/frontend run build",
+    "contracts:compile": "pnpm --filter @moa/contracts run compile",
+    "contracts:test": "pnpm --filter @moa/contracts run test",
+    "contracts:typecheck": "pnpm --filter @moa/contracts run typecheck",
+    "contracts:clean": "pnpm --filter @moa/contracts run clean",
+    "contracts:node": "pnpm --filter @moa/contracts run node",
+    "contracts:deploy:local": "pnpm --filter @moa/contracts run deploy:local",
+    "contracts:deploy:sepolia": "pnpm --filter @moa/contracts run deploy:sepolia"
+  }
+}

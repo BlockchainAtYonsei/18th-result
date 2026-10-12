@@ -1,0 +1,23 @@
+{
+  "name": "@moa/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "clean": "hardhat clean",
+    "node": "hardhat node",
+    "typecheck": "tsc --noEmit",
+    "deploy:local": "hardhat ignition deploy ./ignition/modules/MoaFactory.ts",
+    "deploy:sepolia": "hardhat ignition deploy ./ignition/modules/MoaFactory.ts --network sepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "3.1.8",
+    "@nomicfoundation/hardhat-toolbox-viem": "5.0.7",
+    "@types/node": "26.6.4",
+    "hardhat": "3.18.1",
+    "typescript": "6.0.3",
+    "viem": "2.57.2"
+  }
+}
