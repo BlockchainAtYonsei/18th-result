@@ -1,0 +1,52 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-676ecb275e030fe7acef20efd8e665e5a7aa69ee",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.18.1"
+  },
+  "userSourceNameMap": {
+    "contracts/MoaFactory.sol": "project/contracts/MoaFactory.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/MoaAccount.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28;\n\n/// @title MoaAccount\n/// @notice Five owners jointly manage native assets through three-of-five approval.\ncontract MoaAccount {\n    uint256 public constant OWNER_COUNT = 5;\n    uint256 public constant THRESHOLD = 3;\n\n    enum ProposalStatus {\n        Pending,\n        Executed,\n        Cancelled\n    }\n\n    struct Proposal {\n        address proposer;\n        address target;\n        uint256 value;\n        bytes data;\n        bytes32 intentHash;\n        uint256 approvalCount;\n        ProposalStatus status;\n        uint256 createdAt;\n    }\n\n    error NotOwner(address caller);\n    error InvalidOwner(address owner);\n    error DuplicateOwner(address owner);\n    error InvalidTarget();\n    error InvalidValue();\n    error ProposalNotFound(uint256 proposalId);\n    error ProposalNotPending(uint256 proposalId);\n    error AlreadyApproved(uint256 proposalId, address owner);\n    error InsufficientApprovals(uint256 proposalId, uint256 current, uint256 required);\n    error IntentMismatch(bytes32 expected, bytes32 actual);\n    error InsufficientBalance(uint256 available, uint256 required);\n    error ExecutionFailed(bytes returnData);\n    error NotProposer(uint256 proposalId, address caller);\n\n    event Deposited(address indexed sender, uint256 amount, uint256 balance);\n    event ProposalCreated(\n        uint256 indexed proposalId,\n        address indexed proposer,\n        address indexed target,\n        uint256 value,\n        bytes data,\n        bytes32 intentHash\n    );\n    event ProposalApproved(uint256 indexed proposalId, address indexed owner, uint256 approvalCount);\n    event ProposalCancelled(uint256 indexed proposalId, address indexed proposer);\n    event ProposalExecuted(\n        uint256 indexed proposalId,\n        address indexed executor,\n        address indexed target,\n        uint256 value,\n        bytes data,\n        bytes32 intentHash\n    );\n\n    address[OWNER_COUNT] private _owners;\n    mapping(address owner => bool) public isOwner;\n    mapping(uint256 proposalId => Proposal) private _proposals;\n    mapping(uint256 proposalId => mapping(address owner => bool)) private _approvals;\n\n    uint256 public proposalCount;\n\n    modifier onlyOwner() {\n        if (!isOwner[msg.sender]) revert NotOwner(msg.sender);\n        _;\n    }\n\n    modifier existingProposal(uint256 proposalId) {\n        if (proposalId >= proposalCount) revert ProposalNotFound(proposalId);\n        _;\n    }\n\n    constructor(address[OWNER_COUNT] memory owners_) {\n        for (uint256 i = 0; i < OWNER_COUNT; ++i) {\n            address owner = owners_[i];\n\n            if (owner == address(0)) revert InvalidOwner(owner);\n            if (isOwner[owner]) revert DuplicateOwner(owner);\n\n            isOwner[owner] = true;\n            _owners[i] = owner;\n        }\n    }\n\n    receive() external payable {\n        emit Deposited(msg.sender, msg.value, address(this).balance);\n    }\n\n    function owners() external view returns (address[OWNER_COUNT] memory) {\n        return _owners;\n    }\n\n    function getProposal(uint256 proposalId)\n        external\n        view\n        existingProposal(proposalId)\n        returns (Proposal memory)\n    {\n        return _proposals[proposalId];\n    }\n\n    function hasApproved(uint256 proposalId, address owner)\n        external\n        view\n        existingProposal(proposalId)\n        returns (bool)\n    {\n        return _approvals[proposalId][owner];\n    }\n\n    function createProposal(address target, uint256 value, bytes calldata data)\n        external\n        onlyOwner\n        returns (uint256 proposalId)\n    {\n        if (target == address(0)) revert InvalidTarget();\n        if (value == 0) revert InvalidValue();\n\n        proposalId = proposalCount++;\n        bytes32 intentHash = computeIntentHash(proposalId, target, value, data);\n\n        _proposals[proposalId] = Proposal({\n            proposer: msg.sender,\n            target: target,\n            value: value,\n            data: data,\n            intentHash: intentHash,\n            approvalCount: 0,\n            status: ProposalStatus.Pending,\n            createdAt: block.timestamp\n        });\n\n        emit ProposalCreated(proposalId, msg.sender, target, value, data, intentHash);\n    }\n\n    function approveProposal(uint256 proposalId) external onlyOwner existingProposal(proposalId) {\n        Proposal storage proposal = _proposals[proposalId];\n\n        if (proposal.status != ProposalStatus.Pending) revert ProposalNotPending(proposalId);\n        if (_approvals[proposalId][msg.sender]) revert AlreadyApproved(proposalId, msg.sender);\n\n        _approvals[proposalId][msg.sender] = true;\n        ++proposal.approvalCount;\n\n        emit ProposalApproved(proposalId, msg.sender, proposal.approvalCount);\n    }\n\n    function cancelProposal(uint256 proposalId) external onlyOwner existingProposal(proposalId) {\n        Proposal storage proposal = _proposals[proposalId];\n\n        if (proposal.status != ProposalStatus.Pending) revert ProposalNotPending(proposalId);\n        if (proposal.proposer != msg.sender) revert NotProposer(proposalId, msg.sender);\n\n        proposal.status = ProposalStatus.Cancelled;\n        emit ProposalCancelled(proposalId, msg.sender);\n    }\n\n    function executeProposal(uint256 proposalId, address target, uint256 value, bytes calldata data)\n        external\n        onlyOwner\n        existingProposal(proposalId)\n        returns (bytes memory returnData)\n    {\n        Proposal storage proposal = _proposals[proposalId];\n\n        if (proposal.status != ProposalStatus.Pending) revert ProposalNotPending(proposalId);\n        if (proposal.approvalCount < THRESHOLD) {\n            revert InsufficientApprovals(proposalId, proposal.approvalCount, THRESHOLD);\n        }\n\n        bytes32 actualIntentHash = computeIntentHash(proposalId, target, value, data);\n        if (proposal.intentHash != actualIntentHash) {\n            revert IntentMismatch(proposal.intentHash, actualIntentHash);\n        }\n        if (address(this).balance < value) {\n            revert InsufficientBalance(address(this).balance, value);\n        }\n\n        proposal.status = ProposalStatus.Executed;\n\n        bool success;\n        (success, returnData) = target.call{value: value}(data);\n        if (!success) revert ExecutionFailed(returnData);\n\n        emit ProposalExecuted(proposalId, msg.sender, target, value, data, proposal.intentHash);\n    }\n\n    function computeIntentHash(uint256 proposalId, address target, uint256 value, bytes calldata data)\n        public\n        view\n        returns (bytes32)\n    {\n        return keccak256(abi.encode(address(this), block.chainid, proposalId, target, value, keccak256(data)));\n    }\n}\n"
+      },
+      "project/contracts/MoaFactory.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28;\n\nimport {MoaAccount} from \"./MoaAccount.sol\";\n\n/// @title MoaFactory\n/// @notice Creates Moa accounts and indexes them by owner.\ncontract MoaFactory {\n    uint256 public constant OWNER_COUNT = 5;\n    uint256 public constant THRESHOLD = 3;\n\n    error CreatorNotOwner(address creator);\n\n    event AccountCreated(\n        address indexed account,\n        address indexed creator,\n        address[OWNER_COUNT] owners,\n        uint256 threshold\n    );\n\n    address[] private _accounts;\n    mapping(address owner => address[] accounts) private _accountsByOwner;\n    mapping(address account => bool) public isMoaAccount;\n\n    function createAccount(address[OWNER_COUNT] calldata owners) external returns (address account) {\n        bool creatorIncluded;\n\n        for (uint256 i = 0; i < OWNER_COUNT; ++i) {\n            if (owners[i] == msg.sender) creatorIncluded = true;\n        }\n\n        if (!creatorIncluded) revert CreatorNotOwner(msg.sender);\n\n        account = address(new MoaAccount(owners));\n        _accounts.push(account);\n        isMoaAccount[account] = true;\n\n        for (uint256 i = 0; i < OWNER_COUNT; ++i) {\n            _accountsByOwner[owners[i]].push(account);\n        }\n\n        emit AccountCreated(account, msg.sender, owners, THRESHOLD);\n    }\n\n    function accountCount() external view returns (uint256) {\n        return _accounts.length;\n    }\n\n    function accountAt(uint256 index) external view returns (address) {\n        return _accounts[index];\n    }\n\n    function accountsOf(address owner) external view returns (address[] memory) {\n        return _accountsByOwner[owner];\n    }\n}\n"
+      }
+    }
+  }
+}

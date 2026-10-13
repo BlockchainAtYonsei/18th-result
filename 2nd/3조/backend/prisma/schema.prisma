@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client"
+  moduleFormat = "cjs"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AccountMetadata {
+  address        String   @id
+  name           String
+  creator        String
+  creationTxHash String?  @unique @map("creation_tx_hash")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  proposals  ProposalMetadata[]
+  activities Activity[]
+
+  @@map("account_metadata")
+}
+
+model ProposalMetadata {
+  accountAddress String   @map("account_address")
+  proposalId     String   @map("proposal_id")
+  purpose        String
+  recipientLabel String?  @map("recipient_label")
+  memo           String?
+  creationTxHash String?  @unique @map("creation_tx_hash")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  account AccountMetadata @relation(fields: [accountAddress], references: [address], onDelete: Cascade)
+
+  @@id([accountAddress, proposalId])
+  @@map("proposal_metadata")
+}
+
+model WalletProfile {
+  address   String   @id
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("wallet_profile")
+}
+
+model Activity {
+  id             BigInt       @id @default(autoincrement())
+  accountAddress String       @map("account_address")
+  proposalId     String?      @map("proposal_id")
+  type           ActivityType
+  actor          String?
+  txHash         String?      @map("tx_hash")
+  blockNumber    BigInt?      @map("block_number")
+  logIndex       Int?         @map("log_index")
+  metadata       Json?
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  account AccountMetadata @relation(fields: [accountAddress], references: [address], onDelete: Cascade)
+
+  @@unique([txHash, logIndex])
+  @@index([accountAddress, createdAt])
+  @@index([accountAddress, proposalId, createdAt])
+  @@map("activity")
+}
+
+enum ActivityType {
+  ACCOUNT_CREATED
+  DEPOSIT
+  PROPOSAL_CREATED
+  PROPOSAL_APPROVED
+  THRESHOLD_REACHED
+  EXECUTION_REQUESTED
+  EXECUTION_BLOCKED
+  PROPOSAL_EXECUTED
+}
