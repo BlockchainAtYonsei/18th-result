@@ -1,0 +1,352 @@
+{
+  "schemaVersion": "0.1.0",
+  "snapshotId": "demo-burst-snapshot",
+  "requestId": "demo-burst-request",
+  "address": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+  "network": "mainnet-beta",
+  "mode": "FIXTURE",
+  "transfers": [
+    {
+      "id": "transfer-1",
+      "signature": "4fpPihzVbSFL449X235W6ajGL1UsxPoV6rLzUyeyPzPDXodjTJ1q2kGBtv4zMpjdDhWDqwX7R57ePPjLMCB1Vkq2",
+      "slot": 300000,
+      "timestamp": "2026-11-01T07:30:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "5iFiMoZJiGerPLyykKMWR13uRjDJPxJsUNgxrNEv81hs",
+      "toAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "sourceAccount": "5iFiMoZJiGerPLyykKMWR13uRjDJPxJsUNgxrNEv81hs",
+      "destinationAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "12000000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-2",
+      "signature": "3VAKDzH7nchCQGH3YdfRxXLNvZsqsiBUr7FzZdNv75W1X6MtBhGHC4kV4RrJS3tLAEffWuuW2ZcFP3jP3LydhynH",
+      "slot": 300040,
+      "timestamp": "2026-11-01T08:05:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "9KLgP17FvS9LtPoxLFJrmwqSf2tTs3ZyMMBpQC2ccmeh",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "9KLgP17FvS9LtPoxLFJrmwqSf2tTs3ZyMMBpQC2ccmeh",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "400000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-3",
+      "signature": "2U7znqBPw9kEoNhcR4ai46WrwJv3bqdPygHrpyep3dwA4uPEcpVGamrTNK6FuSL7Dkfpx36YSjWZtvzjx7W8sv9F",
+      "slot": 300080,
+      "timestamp": "2026-11-01T09:15:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+      "toAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "sourceAccount": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+      "destinationAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "1000000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-4",
+      "signature": "4BpVDiuEzaY1uKfaWFA8c3huGBAWH2ZrJJ4r2V4nm9mX9dkcwRRCtR3rKb2aeZegKyLu7PyFberteK7QxDABeTaU",
+      "slot": 300120,
+      "timestamp": "2026-11-01T10:00:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "500000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-5",
+      "signature": "33QAw8QHF8jnZT8uk8cqYKGXaH8Q4c279FFvYYYckH8hiB1b27Nng1K1owCoTDsvSy5ycEq9E3UJHERxExNFX492",
+      "slot": 300160,
+      "timestamp": "2026-11-01T10:00:12Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "500000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-6",
+      "signature": "rRxWN3tggZjTkoWcJ8uExESYfMFueSaFwJXs84C9DnE1HmnxZEov6fCJKY4uFg6X87NigtBtpVFGq73qcof48eQ",
+      "slot": 300200,
+      "timestamp": "2026-11-01T10:00:24Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "500000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-7",
+      "signature": "4kxdwqVbyYSNkzYEPgBf4aXDZVKCiue2LaGDzjtoU2XKLcVYFnDAckaxSFz5NguXbWCQqBSTTrAD7VRGQLRBsY3J",
+      "slot": 300240,
+      "timestamp": "2026-11-01T10:00:36Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "500000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-8",
+      "signature": "3Z5mJFBdMQEcxYyRFUxZ5wjCXhgEXUUSRqaWP5Fdyjgu6j2X2k5eypyjxCzumPEBXcHtBG5nBmZA97XfpFWQAK47",
+      "slot": 300280,
+      "timestamp": "2026-11-01T10:00:48Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "500000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-9",
+      "signature": "ae9jT6EqNTkVZ3bJVLbfre894Zsyj9hM3LxshTVckLuWc6q4Y6GNjkcx3gcxtSx9WWmtRr2wyLbi3rMBSLK7Z1a",
+      "slot": 300320,
+      "timestamp": "2026-11-01T12:30:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "ET2wpYcDKqBZeeyAHsG5bMPUirJR2VFyixQWmSPpocMw",
+      "toAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "sourceAccount": "ET2wpYcDKqBZeeyAHsG5bMPUirJR2VFyixQWmSPpocMw",
+      "destinationAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "700000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-10",
+      "signature": "61eBa39SbvYD3kEaY7xQcdxUkKMLi8X3a9h2xswCypKtwpN4kR68rVMToTqSBeiUJYAmW6uXLqEhfRcJLMyL7HET",
+      "slot": 300360,
+      "timestamp": "2026-11-01T14:00:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "EsnRTyeVwkExTeo8ttASqi9eTNyvcjTQDpkZirTJFB8j",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "EsnRTyeVwkExTeo8ttASqi9eTNyvcjTQDpkZirTJFB8j",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "1200000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-11",
+      "signature": "beAjvJ7e9rr1Hg4Q3iUGFVkaTm1cHYgp2t8N8yLNSxThHZA4z6Wu6wTerzm96TTX1EWvq5a1ejHsyTXh4BVdZXv",
+      "slot": 300400,
+      "timestamp": "2026-11-01T14:01:10Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "4D4uwXcQeiGXnMEm2zpEQiS5Q8xFZHAn8oYwnD69NVfU",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "4D4uwXcQeiGXnMEm2zpEQiS5Q8xFZHAn8oYwnD69NVfU",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "1200000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-12",
+      "signature": "3VMVqsWg4h6YmAsaaegrQ1QwDs7eZ5iJzebt39NEJyThRQmfy2QVuq2Mm1gHpz4n5H5hPa1F486VKRrUMXWnEuC5",
+      "slot": 300440,
+      "timestamp": "2026-11-01T14:02:20Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "AyZQAj4cnjirRNqJiARiVHjL6aUSFm6qF3sDb8KqAk9n",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "AyZQAj4cnjirRNqJiARiVHjL6aUSFm6qF3sDb8KqAk9n",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "1200000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-13",
+      "signature": "6c4EKy4Hk6GfU1yF9Yry5N8j7sFud1n2hPTbMTkeJ7RuvGZZ2gp7PiacvBrjx1iKo1T5LCP48AAS8DzkKLMTpoV",
+      "slot": 300480,
+      "timestamp": "2026-11-01T14:03:30Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "93JPcPiSyDHqmvdau8R7Q132e7iLcNbLszgkNhY1hkN4",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "93JPcPiSyDHqmvdau8R7Q132e7iLcNbLszgkNhY1hkN4",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "1200000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-14",
+      "signature": "2qvtmwDyXsSJuHnQtv6r3mNNJGoCemkXVAAmHBDov81GixqnWEBHicFz2LpDGZofPHwocAgwxT3yh4g1wo58VjVM",
+      "slot": 300520,
+      "timestamp": "2026-11-01T17:45:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "9KLgP17FvS9LtPoxLFJrmwqSf2tTs3ZyMMBpQC2ccmeh",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "9KLgP17FvS9LtPoxLFJrmwqSf2tTs3ZyMMBpQC2ccmeh",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "250000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-15",
+      "signature": "5qbruC88nWv82d7as8gy8pBpkSsJYCrTfThdBPptmrMnh4iB7Ur9crNyW82csX2i9Uy9cz5pcyUgqGM4A5oifg5A",
+      "slot": 300560,
+      "timestamp": "2026-11-01T19:10:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "5iFiMoZJiGerPLyykKMWR13uRjDJPxJsUNgxrNEv81hs",
+      "toAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "sourceAccount": "5iFiMoZJiGerPLyykKMWR13uRjDJPxJsUNgxrNEv81hs",
+      "destinationAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "3000000000",
+      "ownerResolved": true
+    },
+    {
+      "id": "transfer-16",
+      "signature": "4uLgeFXrEjnZ3T4G9HXSLMsiJPMeyaYjFBKs1RhV27xDzhRjyHhspHkYSEk6vqwPhxermhNdAj61CsByD93Af1dW",
+      "slot": 300600,
+      "timestamp": "2026-11-01T22:05:00Z",
+      "instructionIndex": 0,
+      "innerInstructionIndex": null,
+      "transferOrdinal": 0,
+      "fromAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "toAddress": "ET2wpYcDKqBZeeyAHsG5bMPUirJR2VFyixQWmSPpocMw",
+      "sourceAccount": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "destinationAccount": "ET2wpYcDKqBZeeyAHsG5bMPUirJR2VFyixQWmSPpocMw",
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "600000000",
+      "ownerResolved": true
+    }
+  ],
+  "labels": [],
+  "labelDataset": {
+    "source": "TEST_FIXTURE",
+    "version": "1.0.0",
+    "fetchedAt": "2026-11-02T00:00:00Z"
+  },
+  "coverage": {
+    "status": "COMPLETE",
+    "reasons": [],
+    "fromTime": "2026-11-01T00:00:00Z",
+    "toTime": "2026-11-02T00:00:00Z",
+    "snapshotSlot": 400000,
+    "transactionCount": 16,
+    "transferCount": 16,
+    "reachedTimeBoundary": true
+  },
+  "collectedAt": "2026-11-02T00:00:00Z",
+  "dataProvenance": {
+    "dataType": "SYNTHETIC",
+    "source": "TEST_FIXTURE",
+    "reference": "https://example.invalid/frontend-demo-scenarios"
+  }
+}

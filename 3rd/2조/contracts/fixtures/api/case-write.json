@@ -1,0 +1,317 @@
+{
+  "schemaVersion": "0.1.0",
+  "expectedRevision": 0,
+  "case": {
+    "id": "CL-0001",
+    "createdAt": "2026-11-11T00:00:00.000Z",
+    "createdBy": "Fixture reviewer",
+    "input": {
+      "mode": "FIXTURE",
+      "sender": {
+        "address": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+        "fixtureId": "sender"
+      },
+      "recipient": {
+        "address": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+        "fixtureId": "sanctioned"
+      },
+      "asset": {
+        "type": "SOL",
+        "mint": null,
+        "decimals": 9
+      },
+      "amountRaw": "1000000000",
+      "scope": null,
+      "policyVersion": "1.0.0",
+      "rulesetVersion": null
+    },
+    "runs": [
+      {
+        "runId": "case-run-1",
+        "startedAt": "2026-11-11T00:00:00.000Z",
+        "finishedAt": "2026-11-11T00:00:05.000Z",
+        "apiMode": "backend",
+        "status": "DONE",
+        "failedStep": null,
+        "error": null,
+        "complianceRequest": {
+          "intent": {
+            "intentId": "sanctioned-intent",
+            "network": "mainnet-beta",
+            "sender": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "recipient": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "asset": {
+              "type": "SOL",
+              "mint": null,
+              "decimals": 9
+            },
+            "amountRaw": "1000000000",
+            "requestedAt": "2026-11-02T00:00:00Z"
+          },
+          "senderAnalysisId": "sender-analysis",
+          "recipientAnalysisId": "sanctioned-analysis",
+          "policyVersion": "1.0.0"
+        },
+        "compliance": {
+          "schemaVersion": "0.1.0",
+          "requestId": "sanctioned-public-policy-request",
+          "intent": {
+            "intentId": "sanctioned-intent",
+            "network": "mainnet-beta",
+            "sender": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "recipient": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "asset": {
+              "type": "SOL",
+              "mint": null,
+              "decimals": 9
+            },
+            "amountRaw": "1000000000",
+            "requestedAt": "2026-11-02T00:00:00Z"
+          },
+          "assessments": {
+            "sender": {
+              "schemaVersion": "0.1.0",
+              "subjectAddress": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+              "snapshotId": "sender-snapshot",
+              "rulesetVersion": "1.0.0",
+              "riskScore": 0,
+              "riskLevel": "LOW",
+              "detectedRules": [],
+              "evidences": []
+            },
+            "recipient": {
+              "schemaVersion": "0.1.0",
+              "subjectAddress": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+              "snapshotId": "sanctioned-snapshot",
+              "rulesetVersion": "1.0.0",
+              "riskScore": 100,
+              "riskLevel": "HIGH",
+              "detectedRules": [
+                {
+                  "ruleId": "SANCTION_EXACT",
+                  "ruleVersion": "1.0.0",
+                  "riskLevel": "HIGH",
+                  "scoreContribution": 100,
+                  "evidenceIds": [
+                    "evidence-fddad3d4df2a3b78e608c95908369807c1e21ced0517ed11d07fa1dce18db584"
+                  ]
+                }
+              ],
+              "evidences": [
+                {
+                  "evidenceId": "evidence-fddad3d4df2a3b78e608c95908369807c1e21ced0517ed11d07fa1dce18db584",
+                  "type": "ADDRESS_LABEL",
+                  "transactionSignatures": [],
+                  "transferIds": [],
+                  "relatedAddresses": [
+                    "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR"
+                  ],
+                  "labelReferenceIds": [
+                    "synthetic-sanction-001"
+                  ],
+                  "source": {
+                    "snapshotId": "sanctioned-snapshot",
+                    "network": "mainnet-beta",
+                    "mode": "FIXTURE",
+                    "dataProvenance": {
+                      "dataType": "SYNTHETIC",
+                      "source": "TEST_FIXTURE",
+                      "reference": "https://example.invalid/synthetic-fixtures"
+                    },
+                    "labelDataset": {
+                      "source": "TEST_FIXTURE",
+                      "version": "1.0.0",
+                      "fetchedAt": "2026-11-02T00:00:00Z"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "decision": {
+            "schemaVersion": "0.1.0",
+            "decisionId": "decision-859a9cbc8d5c03ce71ab83e0940c1e8b2d2ff047e0bbabe7ee779bde056404e8",
+            "intentId": "sanctioned-intent",
+            "action": "BLOCK",
+            "riskScore": 100,
+            "riskLevel": "HIGH",
+            "reasonCodes": [
+              "SANCTION_EXACT_MATCH"
+            ],
+            "referencedEvidenceIds": [
+              "evidence-fddad3d4df2a3b78e608c95908369807c1e21ced0517ed11d07fa1dce18db584"
+            ],
+            "policyVersion": "1.0.0",
+            "evaluatedAt": "2026-11-02T00:00:00Z"
+          }
+        },
+        "gateway": [],
+        "constellation": [],
+        "sender": {
+          "analysisId": "sender-analysis",
+          "result": {
+            "schemaVersion": "0.1.0",
+            "analysisId": "sender-analysis",
+            "requestId": "sender-request",
+            "status": "COMPLETED",
+            "address": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+            "network": "mainnet-beta",
+            "mode": "FIXTURE",
+            "createdAt": "2026-11-02T00:00:00Z",
+            "updatedAt": "2026-11-02T00:00:00Z",
+            "snapshotId": "sender-snapshot",
+            "coverage": {
+              "status": "COMPLETE",
+              "reasons": [],
+              "fromTime": "2026-11-01T00:00:00Z",
+              "toTime": "2026-11-02T00:00:00Z",
+              "snapshotSlot": 1000,
+              "transactionCount": 1,
+              "transferCount": 1,
+              "reachedTimeBoundary": true
+            },
+            "dataProvenance": {
+              "dataType": "SYNTHETIC",
+              "source": "TEST_FIXTURE",
+              "reference": "https://example.invalid/synthetic-fixtures"
+            },
+            "evaluation": {
+              "schemaVersion": "0.1.0",
+              "subjectAddress": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+              "snapshotId": "sender-snapshot",
+              "rulesetVersion": "1.0.0",
+              "riskScore": 0,
+              "riskLevel": "LOW",
+              "detectedRules": [],
+              "evidences": []
+            },
+            "error": null
+          },
+          "transfers": [
+            {
+              "id": "transfer-1",
+              "signature": "DojKwxnUhDMfqJr7ryzgD9FKnnNXbz1Axd1nUsCtk5v9NK2UKB3YVjYboRsJbTZiFFgmeRzkqjkkviAGGefeeBC",
+              "slot": 101,
+              "timestamp": "2026-11-01T00:00:00Z",
+              "instructionIndex": 0,
+              "innerInstructionIndex": null,
+              "transferOrdinal": 0,
+              "fromAddress": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+              "toAddress": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+              "sourceAccount": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+              "destinationAccount": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+              "asset": {
+                "type": "SOL",
+                "mint": null,
+                "decimals": 9
+              },
+              "amountRaw": "1000000000",
+              "ownerResolved": true
+            }
+          ]
+        },
+        "recipient": {
+          "analysisId": "sanctioned-analysis",
+          "result": {
+            "schemaVersion": "0.1.0",
+            "analysisId": "sanctioned-analysis",
+            "requestId": "sanctioned-request",
+            "status": "COMPLETED",
+            "address": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+            "network": "mainnet-beta",
+            "mode": "FIXTURE",
+            "createdAt": "2026-11-02T00:00:00Z",
+            "updatedAt": "2026-11-02T00:00:00Z",
+            "snapshotId": "sanctioned-snapshot",
+            "coverage": {
+              "status": "COMPLETE",
+              "reasons": [],
+              "fromTime": "2026-11-01T00:00:00Z",
+              "toTime": "2026-11-02T00:00:00Z",
+              "snapshotSlot": 1000,
+              "transactionCount": 1,
+              "transferCount": 1,
+              "reachedTimeBoundary": true
+            },
+            "dataProvenance": {
+              "dataType": "SYNTHETIC",
+              "source": "TEST_FIXTURE",
+              "reference": "https://example.invalid/synthetic-fixtures"
+            },
+            "evaluation": {
+              "schemaVersion": "0.1.0",
+              "subjectAddress": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+              "snapshotId": "sanctioned-snapshot",
+              "rulesetVersion": "1.0.0",
+              "riskScore": 100,
+              "riskLevel": "HIGH",
+              "detectedRules": [
+                {
+                  "ruleId": "SANCTION_EXACT",
+                  "ruleVersion": "1.0.0",
+                  "riskLevel": "HIGH",
+                  "scoreContribution": 100,
+                  "evidenceIds": [
+                    "evidence-fddad3d4df2a3b78e608c95908369807c1e21ced0517ed11d07fa1dce18db584"
+                  ]
+                }
+              ],
+              "evidences": [
+                {
+                  "evidenceId": "evidence-fddad3d4df2a3b78e608c95908369807c1e21ced0517ed11d07fa1dce18db584",
+                  "type": "ADDRESS_LABEL",
+                  "transactionSignatures": [],
+                  "transferIds": [],
+                  "relatedAddresses": [
+                    "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR"
+                  ],
+                  "labelReferenceIds": [
+                    "synthetic-sanction-001"
+                  ],
+                  "source": {
+                    "snapshotId": "sanctioned-snapshot",
+                    "network": "mainnet-beta",
+                    "mode": "FIXTURE",
+                    "dataProvenance": {
+                      "dataType": "SYNTHETIC",
+                      "source": "TEST_FIXTURE",
+                      "reference": "https://example.invalid/synthetic-fixtures"
+                    },
+                    "labelDataset": {
+                      "source": "TEST_FIXTURE",
+                      "version": "1.0.0",
+                      "fetchedAt": "2026-11-02T00:00:00Z"
+                    }
+                  }
+                }
+              ]
+            },
+            "error": null
+          },
+          "transfers": [
+            {
+              "id": "transfer-1",
+              "signature": "DojKwxnUhDMfqJr7ryzgD9FKnnNXbz1Axd1nUsCtk5v9NK2UKB3YVjYboRsJbTZiFFgmeRzkqjkkviAGGefeeBC",
+              "slot": 101,
+              "timestamp": "2026-11-01T00:00:00Z",
+              "instructionIndex": 0,
+              "innerInstructionIndex": null,
+              "transferOrdinal": 0,
+              "fromAddress": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+              "toAddress": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+              "sourceAccount": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+              "destinationAccount": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+              "asset": {
+                "type": "SOL",
+                "mint": null,
+                "decimals": 9
+              },
+              "amountRaw": "1000000000",
+              "ownerResolved": true
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Java backend and local service outputs
+target/
+*.iml
+*.log
+.env
+.run/
+.env.*
+!.env.example
+!.env.*.example
+
+.local-data/

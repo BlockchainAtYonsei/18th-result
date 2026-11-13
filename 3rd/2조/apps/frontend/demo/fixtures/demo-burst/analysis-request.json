@@ -1,0 +1,11 @@
+{
+  "address": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+  "network": "mainnet-beta",
+  "mode": "FIXTURE",
+  "fixtureId": "demo-burst",
+  "scope": {
+    "fromTime": "2026-11-01T00:00:00Z",
+    "toTime": "2026-11-02T00:00:00Z",
+    "maxTransactions": 100
+  }
+}

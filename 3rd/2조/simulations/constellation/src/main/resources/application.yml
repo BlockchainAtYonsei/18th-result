@@ -1,0 +1,26 @@
+server:
+  address: ${CONSTELLATION_HOST:127.0.0.1}
+  port: ${CONSTELLATION_PORT:8004}
+spring:
+  application:
+    name: constellation-simulator
+  jackson:
+    parser:
+      strict-duplicate-detection: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+compliance:
+  max-body-bytes: 1048576
+constellation:
+  mock:
+    # true 이면 mockVersion(0.0.0-research-pending) 요청에 화면 확인용 고정 결과를 반환한다.
+    # 프로토콜 판정이 아니므로 기본값은 false (미승인 버전 → 422 UNSUPPORTED_VERSION).
+    enabled: ${CONSTELLATION_MOCK_ENABLED:false}
+    version: 0.0.0-research-pending
+  models:
+    # 판정 모델 (팀 초안, 리서치팀 공식 확정 시 값/버전 갱신)
+    enabled: ${CONSTELLATION_MODELS_ENABLED:true}
+    # Version and both thresholds are fixed by the team research model, not runtime configuration.

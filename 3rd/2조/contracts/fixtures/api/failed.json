@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "0.1.0",
+  "analysisId": "normal-analysis",
+  "requestId": "normal-request",
+  "status": "FAILED",
+  "address": "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR",
+  "network": "mainnet-beta",
+  "mode": "FIXTURE",
+  "createdAt": "2026-11-02T00:00:00Z",
+  "updatedAt": "2026-11-02T00:00:00Z",
+  "snapshotId": null,
+  "coverage": null,
+  "dataProvenance": null,
+  "evaluation": null,
+  "error": {
+    "code": "UPSTREAM_UNAVAILABLE",
+    "message": "Collector failed",
+    "retryable": true
+  }
+}

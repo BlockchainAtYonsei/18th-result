@@ -1,0 +1,82 @@
+/* Design tokens (design doc §10). Components use these names, never raw values. */
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('https://cdn.jsdelivr.net/gh/rektdeckard/departure-mono@v1.500/public/assets/DepartureMono-Regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --page: #070b14;
+  --surface: #0d1424;
+  --surface-2: #131c30;
+  --fill-1: rgb(230 241 253 / 0.04);
+  --fill-2: rgb(230 241 253 / 0.07);
+  --fill-3: rgb(230 241 253 / 0.11);
+  --hairline: rgb(230 241 253 / 0.08);
+  --line: rgb(230 241 253 / 0.14);
+  --control-border: #3a4a66;
+
+  /* ink */
+  --text: #e6f1fd;
+  --text-2: #afc0d8;
+  --muted: #7c8da6;
+
+  /* BAY blues */
+  --accent: #129af0;
+  --primary: #0a61e7;
+  --primary-hover: #1b6ff0;
+  --point: #08428b;
+  --deep: #02122f;
+  --soft: #8fb0dc;
+
+  /* status: always with an icon and a label */
+  --allow: #0ca30c;
+  --warn: #fab219;
+  --review: #9085e9;
+  --block: #d03b3b;
+  --na: #3a4760;
+
+  /* type */
+  --font-ui: 'Satoshi', 'Pretendard Variable', system-ui, sans-serif;
+  --font-mono: 'Departure Mono', ui-monospace, monospace;
+  --text-number-l: 33px;
+  --text-title-m: 22px;
+  --leading-title-m: 28px;
+  --text-title-s: 17px;
+  --leading-title-s: 24px;
+  --text-body: 15px;
+  --leading-body: 22px;
+  --text-ui: 14px;
+  --leading-ui: 20px;
+  --text-table: 13px;
+  --leading-table: 18px;
+  --text-caption: 12px;
+  --leading-caption: 16px;
+  --text-mono: 11px;
+
+  /* shape and space: 4 px grid */
+  --r-xs: 4px;
+  --r: 6px;
+  --r-card: 8px;
+  --r-modal: 12px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --gutter: 24px;
+  --shadow-pop: 0 12px 32px rgb(0 0 0 / 0.45);
+
+  --duration-quick: 150ms;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gutter: 16px;
+  }
+}

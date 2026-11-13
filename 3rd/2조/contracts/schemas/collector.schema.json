@@ -1,0 +1,421 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baypeline.github.io/solana-compliance-lab/contracts/schemas/collector.schema.json",
+  "title": "collector",
+  "$comment": "Unified team specifications; initial draft 0.1.0.",
+  "$defs": {
+    "KYTCollectionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "address": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "network": {
+          "$ref": "common.schema.json#/$defs/Network"
+        },
+        "mode": {
+          "$ref": "common.schema.json#/$defs/Mode"
+        },
+        "fixtureId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "scope": {
+          "$ref": "common.schema.json#/$defs/Scope"
+        }
+      },
+      "required": [
+        "requestId",
+        "address",
+        "network",
+        "mode",
+        "scope"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "FIXTURE"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "fixtureId"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "LIVE"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "fixtureId"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "NormalizedTransfer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "signature": {
+          "$ref": "common.schema.json#/$defs/Signature"
+        },
+        "slot": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timestamp": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/UtcTimestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "instructionIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "innerInstructionIndex": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transferOrdinal": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fromAddress": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Address"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "toAddress": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Address"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sourceAccount": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "destinationAccount": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "asset": {
+          "$ref": "common.schema.json#/$defs/Asset"
+        },
+        "amountRaw": {
+          "$ref": "common.schema.json#/$defs/RawAmount"
+        },
+        "ownerResolved": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "signature",
+        "slot",
+        "timestamp",
+        "instructionIndex",
+        "innerInstructionIndex",
+        "transferOrdinal",
+        "fromAddress",
+        "toAddress",
+        "sourceAccount",
+        "destinationAccount",
+        "asset",
+        "amountRaw",
+        "ownerResolved"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ownerResolved": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "fromAddress": {
+                "$ref": "common.schema.json#/$defs/Address"
+              },
+              "toAddress": {
+                "$ref": "common.schema.json#/$defs/Address"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AddressLabel": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "network": {
+          "$ref": "common.schema.json#/$defs/Network"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "SANCTIONED",
+            "INCIDENT",
+            "OTHER"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "OFAC_SDN",
+            "TEST_FIXTURE"
+          ]
+        },
+        "referenceId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "address",
+        "network",
+        "type",
+        "source",
+        "referenceId"
+      ]
+    },
+    "LabelDataset": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "OFAC_SDN",
+            "TEST_FIXTURE"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fetchedAt": {
+          "$ref": "common.schema.json#/$defs/UtcTimestamp"
+        }
+      },
+      "required": [
+        "source",
+        "version",
+        "fetchedAt"
+      ]
+    },
+    "Coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "COMPLETE",
+            "PARTIAL"
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/CoverageReason"
+          },
+          "uniqueItems": true
+        },
+        "fromTime": {
+          "$ref": "common.schema.json#/$defs/UtcTimestamp"
+        },
+        "toTime": {
+          "$ref": "common.schema.json#/$defs/UtcTimestamp"
+        },
+        "snapshotSlot": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "transactionCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "transferCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reachedTimeBoundary": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "reasons",
+        "fromTime",
+        "toTime",
+        "snapshotSlot",
+        "transactionCount",
+        "transferCount",
+        "reachedTimeBoundary"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "COMPLETE"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reasons": {
+                "maxItems": 0
+              },
+              "reachedTimeBoundary": {
+                "const": true
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "reasons": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "KYTDataSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "snapshotId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "address": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "network": {
+          "$ref": "common.schema.json#/$defs/Network"
+        },
+        "mode": {
+          "$ref": "common.schema.json#/$defs/Mode"
+        },
+        "transfers": {
+          "type": "array",
+          "items": {
+            "$ref": "collector.schema.json#/$defs/NormalizedTransfer"
+          }
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "collector.schema.json#/$defs/AddressLabel"
+          }
+        },
+        "labelDataset": {
+          "$ref": "collector.schema.json#/$defs/LabelDataset"
+        },
+        "coverage": {
+          "$ref": "collector.schema.json#/$defs/Coverage"
+        },
+        "collectedAt": {
+          "$ref": "common.schema.json#/$defs/UtcTimestamp"
+        },
+        "dataProvenance": {
+          "$ref": "common.schema.json#/$defs/DataProvenance"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "snapshotId",
+        "requestId",
+        "address",
+        "network",
+        "mode",
+        "transfers",
+        "labels",
+        "labelDataset",
+        "coverage",
+        "collectedAt",
+        "dataProvenance"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "LIVE"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "dataProvenance": {
+                "properties": {
+                  "dataType": {
+                    "const": "ON_CHAIN"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$ref": "#/$defs/KYTDataSnapshot"
+}

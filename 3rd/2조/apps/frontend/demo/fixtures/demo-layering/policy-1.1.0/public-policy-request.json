@@ -1,0 +1,18 @@
+{
+  "intent": {
+    "intentId": "demo-layering-intent",
+    "network": "mainnet-beta",
+    "sender": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+    "recipient": "HHhPJpqVeSyMAn2q2p7eCTz5vUMbYX2uCzfydGvn77Sd",
+    "asset": {
+      "type": "SOL",
+      "mint": null,
+      "decimals": 9
+    },
+    "amountRaw": "1000000000",
+    "requestedAt": "2026-11-02T00:00:00Z"
+  },
+  "senderAnalysisId": "sender-analysis",
+  "recipientAnalysisId": "demo-layering-analysis",
+  "policyVersion": "1.1.0"
+}

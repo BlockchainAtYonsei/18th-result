@@ -1,0 +1,600 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baypeline.github.io/solana-compliance-lab/contracts/schemas/experiment.schema.json",
+  "title": "experiment",
+  "$comment": "Unified team specifications; initial draft 0.1.0.",
+  "$defs": {
+    "GatewayRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "routeId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "policyEnforced": {
+          "type": "boolean"
+        },
+        "warningAcknowledged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "routeId",
+        "policyEnforced",
+        "warningAcknowledged"
+      ]
+    },
+    "GatewayExperimentRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "intent": {
+          "$ref": "policy.schema.json#/$defs/TransactionIntent"
+        },
+        "decision": {
+          "$ref": "policy.schema.json#/$defs/ComplianceDecision"
+        },
+        "route": {
+          "$ref": "experiment.schema.json#/$defs/GatewayRoute"
+        }
+      },
+      "required": [
+        "requestId",
+        "intent",
+        "decision",
+        "route"
+      ]
+    },
+    "GatewayReason": {
+      "type": "string",
+      "enum": [
+        "POLICY_NOT_ENFORCED",
+        "POLICY_ALLOW",
+        "POLICY_BLOCK",
+        "POLICY_REVIEW",
+        "WARNING_NOT_ACKNOWLEDGED",
+        "WARNING_ACKNOWLEDGED"
+      ]
+    },
+    "GatewayExperimentResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "experimentId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "intentId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "routeId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "SUBMISSION_ALLOWED",
+            "SUBMISSION_REJECTED",
+            "REVIEW_REQUIRED"
+          ]
+        },
+        "policyApplied": {
+          "type": "boolean"
+        },
+        "reasonCodes": {
+          "type": "array",
+          "items": {
+            "$ref": "experiment.schema.json#/$defs/GatewayReason"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "actualBroadcast": {
+          "const": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "experimentId",
+        "intentId",
+        "routeId",
+        "outcome",
+        "policyApplied",
+        "reasonCodes",
+        "actualBroadcast"
+      ]
+    },
+    "ConstellationScenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "proposerCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rejectingProposerCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "submittedToAcceptingProposer": {
+          "type": "boolean"
+        },
+        "psliceAvailable": {
+          "type": "boolean"
+        },
+        "attestationPercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Attesters witnessing the target pslice; not the aggregate block participation rate."
+        },
+        "leaderAttemptsExclusion": {
+          "type": "boolean"
+        },
+        "attesterParticipationPercent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Aggregate attester participation for block validity, independent of the target pslice attestation percentage."
+        }
+      },
+      "required": [
+        "proposerCount",
+        "rejectingProposerCount",
+        "submittedToAcceptingProposer",
+        "psliceAvailable",
+        "attestationPercent",
+        "leaderAttemptsExclusion"
+      ]
+    },
+    "ConstellationSimulationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "intentId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "decisionId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "protocolModelVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "scenario": {
+          "$ref": "experiment.schema.json#/$defs/ConstellationScenario"
+        }
+      },
+      "required": [
+        "requestId",
+        "intentId",
+        "decisionId",
+        "protocolModelVersion",
+        "scenario"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "protocolModelVersion": {
+                "enum": [
+                  "0.2.0-research",
+                  "0.2.0-single-leader"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scenario": {
+                "$ref": "experiment.schema.json#/$defs/ResearchConstellationScenario"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SimulationExplanation": {
+      "type": "string",
+      "enum": [
+        "NO_ACCEPTING_PROPOSER",
+        "NOT_SUBMITTED_TO_ACCEPTING_PROPOSER",
+        "PSLICE_UNAVAILABLE",
+        "ATTESTATION_CONDITION_NOT_MET",
+        "ATTESTATION_CONDITION_MET",
+        "LEADER_EXCLUSION_VALID",
+        "LEADER_EXCLUSION_INVALID",
+        "NO_EXCLUSION_ATTEMPT",
+        "REJECTING_COUNT_EXCEEDS_TOTAL",
+        "CONTRADICTORY_SUBMISSION_PATH",
+        "MOCK_RESULT_NOT_PROTOCOL_VALIDATED",
+        "BLOCK_PARTICIPATION_BELOW_THRESHOLD",
+        "BLOCK_PARTICIPATION_THRESHOLD_MET",
+        "PSLICE_ATTESTATION_EXCEEDS_PARTICIPATION",
+        "REQUIRED_PSLICE_UNAVAILABLE"
+      ]
+    },
+    "ConstellationSimulationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "simulationId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "intentId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "protocolModelVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "proposerPathAvailable": {
+          "type": "boolean"
+        },
+        "psliceInclusionEnforced": {
+          "type": "boolean"
+        },
+        "leaderExclusionValid": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "NO_SUBMISSION_PATH",
+            "INCLUSION_NOT_ENFORCED",
+            "INCLUSION_ENFORCED",
+            "INVALID_SCENARIO",
+            "BLOCK_SKIPPED"
+          ]
+        },
+        "explanationCodes": {
+          "type": "array",
+          "items": {
+            "$ref": "experiment.schema.json#/$defs/SimulationExplanation"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "simulationOnly": {
+          "const": true
+        },
+        "blockStatus": {
+          "enum": [
+            "VALID",
+            "SKIPPED",
+            "INVALID_LEADER_EXCLUSION",
+            "NOT_EVALUATED"
+          ]
+        },
+        "modelParameters": {
+          "$ref": "experiment.schema.json#/$defs/ConstellationModelParameters"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "simulationId",
+        "intentId",
+        "protocolModelVersion",
+        "proposerPathAvailable",
+        "psliceInclusionEnforced",
+        "leaderExclusionValid",
+        "outcome",
+        "explanationCodes",
+        "simulationOnly"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "INCLUSION_ENFORCED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "proposerPathAvailable": {
+                "const": true
+              },
+              "psliceInclusionEnforced": {
+                "const": true
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "NO_SUBMISSION_PATH"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "proposerPathAvailable": {
+                "const": false
+              },
+              "psliceInclusionEnforced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "INCLUSION_NOT_ENFORCED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "psliceInclusionEnforced": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "INVALID_SCENARIO"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "proposerPathAvailable": {
+                "const": false
+              },
+              "psliceInclusionEnforced": {
+                "const": false
+              },
+              "leaderExclusionValid": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "protocolModelVersion": {
+                "enum": [
+                  "0.2.0-research",
+                  "0.2.0-single-leader"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "blockStatus"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "protocolModelVersion": {
+                "const": "0.2.0-research"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "modelParameters"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "BLOCK_SKIPPED"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "blockStatus"
+            ],
+            "properties": {
+              "blockStatus": {
+                "const": "SKIPPED"
+              },
+              "leaderExclusionValid": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "blockStatus"
+            ],
+            "properties": {
+              "blockStatus": {
+                "const": "SKIPPED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "BLOCK_SKIPPED"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "blockStatus"
+            ],
+            "properties": {
+              "blockStatus": {
+                "const": "INVALID_LEADER_EXCLUSION"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "outcome": {
+                "const": "INCLUSION_ENFORCED"
+              },
+              "leaderExclusionValid": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "protocolModelVersion": {
+                "const": "0.2.0-single-leader"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "blockStatus": {
+                "const": "NOT_EVALUATED"
+              },
+              "outcome": {
+                "enum": [
+                  "NO_SUBMISSION_PATH",
+                  "INCLUSION_NOT_ENFORCED",
+                  "INVALID_SCENARIO"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "protocolModelVersion": {
+                "const": "0.2.0-research"
+              },
+              "outcome": {
+                "const": "INVALID_SCENARIO"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "blockStatus": {
+                "const": "NOT_EVALUATED"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "protocolModelVersion": {
+                "const": "0.2.0-research"
+              },
+              "outcome": {
+                "const": "INCLUSION_ENFORCED"
+              },
+              "leaderExclusionValid": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "blockStatus": {
+                "const": "INVALID_LEADER_EXCLUSION"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "blockStatus"
+            ],
+            "properties": {
+              "blockStatus": {
+                "const": "VALID"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "leaderExclusionValid": {
+                "enum": [
+                  true,
+                  null
+                ]
+              },
+              "outcome": {
+                "enum": [
+                  "NO_SUBMISSION_PATH",
+                  "INCLUSION_NOT_ENFORCED",
+                  "INCLUSION_ENFORCED"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ResearchConstellationScenario": {
+      "allOf": [
+        {
+          "$ref": "experiment.schema.json#/$defs/ConstellationScenario"
+        },
+        {
+          "required": [
+            "attesterParticipationPercent"
+          ]
+        }
+      ]
+    },
+    "ConstellationModelParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "psliceInclusionThresholdPercent",
+        "blockParticipationThresholdPercent"
+      ],
+      "properties": {
+        "sourceId": {
+          "const": "team-research-40-60-v1"
+        },
+        "psliceInclusionThresholdPercent": {
+          "const": 40
+        },
+        "blockParticipationThresholdPercent": {
+          "const": 60
+        }
+      }
+    }
+  }
+}

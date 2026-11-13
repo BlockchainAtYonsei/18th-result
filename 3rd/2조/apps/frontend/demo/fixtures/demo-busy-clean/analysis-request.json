@@ -1,0 +1,11 @@
+{
+  "address": "5sHVdLuEBVXK8wRMzqESJcFKNdWuEWHPMrES7iPok2UL",
+  "network": "mainnet-beta",
+  "mode": "FIXTURE",
+  "fixtureId": "demo-busy-clean",
+  "scope": {
+    "fromTime": "2026-11-01T00:00:00Z",
+    "toTime": "2026-11-02T00:00:00Z",
+    "maxTransactions": 100
+  }
+}

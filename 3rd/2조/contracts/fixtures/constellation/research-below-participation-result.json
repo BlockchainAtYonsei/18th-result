@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "0.1.0",
+  "simulationId": "research-below-participation",
+  "intentId": "sanctioned-intent",
+  "protocolModelVersion": "0.2.0-research",
+  "proposerPathAvailable": true,
+  "psliceInclusionEnforced": false,
+  "leaderExclusionValid": null,
+  "outcome": "BLOCK_SKIPPED",
+  "explanationCodes": [
+    "BLOCK_PARTICIPATION_BELOW_THRESHOLD"
+  ],
+  "blockStatus": "SKIPPED",
+  "modelParameters": {
+    "sourceId": "team-research-40-60-v1",
+    "psliceInclusionThresholdPercent": 40,
+    "blockParticipationThresholdPercent": 60
+  },
+  "simulationOnly": true
+}
