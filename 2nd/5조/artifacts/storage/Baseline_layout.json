@@ -1,0 +1,73 @@
+{
+  "storage": [
+    {
+      "astId": 4,
+      "contract": "src/Baseline.sol:Baseline",
+      "label": "owner",
+      "offset": 0,
+      "slot": "0",
+      "type": "t_address"
+    },
+    {
+      "astId": 6,
+      "contract": "src/Baseline.sol:Baseline",
+      "label": "paused",
+      "offset": 20,
+      "slot": "0",
+      "type": "t_bool"
+    },
+    {
+      "astId": 8,
+      "contract": "src/Baseline.sol:Baseline",
+      "label": "unusedGap",
+      "offset": 0,
+      "slot": "1",
+      "type": "t_uint96"
+    },
+    {
+      "astId": 12,
+      "contract": "src/Baseline.sol:Baseline",
+      "label": "balances",
+      "offset": 0,
+      "slot": "2",
+      "type": "t_mapping(t_address,t_uint256)"
+    },
+    {
+      "astId": 14,
+      "contract": "src/Baseline.sol:Baseline",
+      "label": "totalSupply",
+      "offset": 0,
+      "slot": "3",
+      "type": "t_uint256"
+    }
+  ],
+  "types": {
+    "t_address": {
+      "encoding": "inplace",
+      "label": "address",
+      "numberOfBytes": "20"
+    },
+    "t_bool": {
+      "encoding": "inplace",
+      "label": "bool",
+      "numberOfBytes": "1"
+    },
+    "t_mapping(t_address,t_uint256)": {
+      "encoding": "mapping",
+      "key": "t_address",
+      "label": "mapping(address => uint256)",
+      "numberOfBytes": "32",
+      "value": "t_uint256"
+    },
+    "t_uint256": {
+      "encoding": "inplace",
+      "label": "uint256",
+      "numberOfBytes": "32"
+    },
+    "t_uint96": {
+      "encoding": "inplace",
+      "label": "uint96",
+      "numberOfBytes": "12"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+=== Baseline ===
+
+╭-------------+-----------------------------+------+--------+-------+---------------------------╮
+| Name        | Type                        | Slot | Offset | Bytes | Contract                  |
++===============================================================================================+
+| owner       | address                     | 0    | 0      | 20    | src/Baseline.sol:Baseline |
+|-------------+-----------------------------+------+--------+-------+---------------------------|
+| paused      | bool                        | 0    | 20     | 1     | src/Baseline.sol:Baseline |
+|-------------+-----------------------------+------+--------+-------+---------------------------|
+| unusedGap   | uint96                      | 1    | 0      | 12    | src/Baseline.sol:Baseline |
+|-------------+-----------------------------+------+--------+-------+---------------------------|
+| balances    | mapping(address => uint256) | 2    | 0      | 32    | src/Baseline.sol:Baseline |
+|-------------+-----------------------------+------+--------+-------+---------------------------|
+| totalSupply | uint256                     | 3    | 0      | 32    | src/Baseline.sol:Baseline |
+╰-------------+-----------------------------+------+--------+-------+---------------------------╯
+
+=== Restricted ===
+
+╭----------------+-----------------------------+------+--------+-------+-------------------------------╮
+| Name           | Type                        | Slot | Offset | Bytes | Contract                      |
++======================================================================================================+
+| owner          | address                     | 0    | 0      | 20    | src/Restricted.sol:Restricted |
+|----------------+-----------------------------+------+--------+-------+-------------------------------|
+| paused         | bool                        | 0    | 20     | 1     | src/Restricted.sol:Restricted |
+|----------------+-----------------------------+------+--------+-------+-------------------------------|
+| unusedGap      | uint96                      | 1    | 0      | 12    | src/Restricted.sol:Restricted |
+|----------------+-----------------------------+------+--------+-------+-------------------------------|
+| balances       | mapping(address => uint256) | 2    | 0      | 32    | src/Restricted.sol:Restricted |
+|----------------+-----------------------------+------+--------+-------+-------------------------------|
+| totalSupply    | uint256                     | 3    | 0      | 32    | src/Restricted.sol:Restricted |
+|----------------+-----------------------------+------+--------+-------+-------------------------------|
+| halted         | bool                        | 4    | 0      | 1     | src/Restricted.sol:Restricted |
+|----------------+-----------------------------+------+--------+-------+-------------------------------|
+| rescueReceiver | address                     | 4    | 1      | 20    | src/Restricted.sol:Restricted |
+╰----------------+-----------------------------+------+--------+-------+-------------------------------╯
+
+=== Broken ===
+
+╭-------------+-----------------------------+------+--------+-------+-----------------------╮
+| Name        | Type                        | Slot | Offset | Bytes | Contract              |
++===========================================================================================+
+| paused      | bool                        | 0    | 0      | 1     | src/Broken.sol:Broken |
+|-------------+-----------------------------+------+--------+-------+-----------------------|
+| owner       | address                     | 0    | 1      | 20    | src/Broken.sol:Broken |
+|-------------+-----------------------------+------+--------+-------+-----------------------|
+| balances    | mapping(address => uint128) | 1    | 0      | 32    | src/Broken.sol:Broken |
+|-------------+-----------------------------+------+--------+-------+-----------------------|
+| totalSupply | uint256                     | 2    | 0      | 32    | src/Broken.sol:Broken |
+|-------------+-----------------------------+------+--------+-------+-----------------------|
+| halted      | bool                        | 3    | 0      | 1     | src/Broken.sol:Broken |
+╰-------------+-----------------------------+------+--------+-------+-----------------------╯
+
+
+======= DIFF: Baseline vs Restricted (expect MATCH on shared vars) =======
+variable                       | base slot/off/type                       | rest slot/off/type                       | verdict
+balances                       | 2/0/t_mapping(t_address,t_uint25 | 2/0/t_mapping(t_address,t_uint25 | MATCH
+owner                          | 0/0/t_address                    | 0/0/t_address                    | MATCH
+paused                         | 0/20/t_bool                       | 0/20/t_bool                       | MATCH
+totalSupply                    | 3/0/t_uint256                    | 3/0/t_uint256                    | MATCH
+unusedGap                      | 1/0/t_uint96                     | 1/0/t_uint96                     | MATCH
+Appended in Restricted only: ['halted', 'rescueReceiver']
+Shared MATCH=5 MISMATCH=0
+
+======= DIFF: Baseline vs Broken (expect MISMATCH) =======
+balances                       | 2/0/t_mapping(t_address,t_uint25 | 1/0/t_mapping(t_address,t_uint12 | MISMATCH
+owner                          | 0/0/t_address                    | 0/1/t_address                    | MISMATCH
+paused                         | 0/20/t_bool                       | 0/0/t_bool                       | MISMATCH
+totalSupply                    | 3/0/t_uint256                    | 2/0/t_uint256                    | MISMATCH
+Removed in Broken: ['unusedGap']
+Added in Broken only: ['halted']
+Shared MATCH=0 MISMATCH=4
+
+SUMMARY {'restricted_match': 5, 'restricted_mismatch': 0, 'broken_match': 0, 'broken_mismatch': 4, 'restricted_appended': 2, 'broken_removed': 1}
+Wrote artifacts/storage_diff_table.md and storage_diff.csv

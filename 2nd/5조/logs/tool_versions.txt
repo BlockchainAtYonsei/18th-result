@@ -1,0 +1,18 @@
+=== tool versions Wed, 07 Oct 2026 14:55:35 +0900 ===
+forge Version: 1.8.5
+Commit SHA: 51a52c59cffd940f76eddd0b4bb1791aa4b5ac7f
+Build Timestamp: 2026-10-05T17:18:54.332175693Z (1791220734)
+Build Profile: dist
+cast Version: 1.8.5
+Commit SHA: 51a52c59cffd940f76eddd0b4bb1791aa4b5ac7f
+Build Timestamp: 2026-10-05T17:18:54.332175693Z (1791220734)
+Build Profile: dist
+Python 3.13.5
+v20.19.2
+solc via forge 0.8.24 (casting-boundary / storage-layout)
+solc via forge 0.6.12 (casting-boundary06 build OK)
+OZ contracts: v5.0.2
+forge-std: v1.17.0
+GitHub notional-finance/contracts master SHA: 4bf7a85e6cf81cde4283e0efab0b03f21249ba00
+ExchangeRate.sol blob SHA: 5e093288dd13d03468b3178365ac2900803a7f40
+mainnet.json gitHash field: 28619fb60b3d95230e89146fa7c9f5e092ed35ea

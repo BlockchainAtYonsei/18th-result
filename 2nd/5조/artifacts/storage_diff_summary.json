@@ -1,0 +1,8 @@
+{
+  "restricted_match": 5,
+  "restricted_mismatch": 0,
+  "broken_match": 0,
+  "broken_mismatch": 4,
+  "restricted_appended": 2,
+  "broken_removed": 1
+}
