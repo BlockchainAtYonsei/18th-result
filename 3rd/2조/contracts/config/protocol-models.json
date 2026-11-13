@@ -1,0 +1,9 @@
+{
+  "approvedVersions": [
+    "0.2.0-research",
+    "0.2.0-single-leader"
+  ],
+  "status": "TEAM_RESEARCH_MODEL",
+  "mockVersion": "0.0.0-research-pending",
+  "researchSourceId": "team-research-40-60-v1"
+}

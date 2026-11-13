@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "0.1.0",
+  "decisionId": "decision-47b1a356edf223f0d62644f5252ec2c9cd35704680067dc3d97898db8e0e2839",
+  "intentId": "partial-intent",
+  "action": "REVIEW",
+  "riskScore": null,
+  "riskLevel": null,
+  "reasonCodes": [
+    "INSUFFICIENT_ASSESSMENT"
+  ],
+  "referencedEvidenceIds": [],
+  "policyVersion": "1.0.0",
+  "evaluatedAt": "2026-11-02T00:00:00Z"
+}

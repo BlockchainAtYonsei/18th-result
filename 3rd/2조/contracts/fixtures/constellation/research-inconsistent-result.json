@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "0.1.0",
+  "simulationId": "research-inconsistent",
+  "intentId": "sanctioned-intent",
+  "protocolModelVersion": "0.2.0-research",
+  "proposerPathAvailable": false,
+  "psliceInclusionEnforced": false,
+  "leaderExclusionValid": null,
+  "outcome": "INVALID_SCENARIO",
+  "explanationCodes": [
+    "PSLICE_ATTESTATION_EXCEEDS_PARTICIPATION"
+  ],
+  "blockStatus": "NOT_EVALUATED",
+  "modelParameters": {
+    "sourceId": "team-research-40-60-v1",
+    "psliceInclusionThresholdPercent": 40,
+    "blockParticipationThresholdPercent": 60
+  },
+  "simulationOnly": true
+}

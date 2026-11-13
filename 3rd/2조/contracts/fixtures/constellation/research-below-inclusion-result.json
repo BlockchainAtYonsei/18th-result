@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "0.1.0",
+  "simulationId": "research-below-inclusion",
+  "intentId": "sanctioned-intent",
+  "protocolModelVersion": "0.2.0-research",
+  "proposerPathAvailable": true,
+  "psliceInclusionEnforced": false,
+  "leaderExclusionValid": true,
+  "outcome": "INCLUSION_NOT_ENFORCED",
+  "explanationCodes": [
+    "BLOCK_PARTICIPATION_THRESHOLD_MET",
+    "ATTESTATION_CONDITION_NOT_MET",
+    "LEADER_EXCLUSION_VALID"
+  ],
+  "blockStatus": "VALID",
+  "modelParameters": {
+    "sourceId": "team-research-40-60-v1",
+    "psliceInclusionThresholdPercent": 40,
+    "blockParticipationThresholdPercent": 60
+  },
+  "simulationOnly": true
+}

@@ -1,0 +1,447 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baypeline.github.io/solana-compliance-lab/contracts/schemas/kyt.schema.json",
+  "title": "kyt",
+  "$comment": "Unified team specifications; initial draft 0.1.0.",
+  "$defs": {
+    "RuleId": {
+      "type": "string",
+      "enum": [
+        "SANCTION_EXACT",
+        "SANCTION_DIRECT_FLOW",
+        "RAPID_FAN_OUT",
+        "RAPID_REPEAT"
+      ]
+    },
+    "DetectedRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ruleId": {
+          "$ref": "kyt.schema.json#/$defs/RuleId"
+        },
+        "ruleVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "riskLevel": {
+          "$ref": "common.schema.json#/$defs/RiskLevel"
+        },
+        "scoreContribution": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "evidenceIds": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "ruleId",
+        "ruleVersion",
+        "riskLevel",
+        "scoreContribution",
+        "evidenceIds"
+      ]
+    },
+    "EvidenceSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "snapshotId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "network": {
+          "$ref": "common.schema.json#/$defs/Network"
+        },
+        "mode": {
+          "$ref": "common.schema.json#/$defs/Mode"
+        },
+        "dataProvenance": {
+          "$ref": "common.schema.json#/$defs/DataProvenance"
+        },
+        "labelDataset": {
+          "$ref": "collector.schema.json#/$defs/LabelDataset"
+        }
+      },
+      "required": [
+        "snapshotId",
+        "network",
+        "mode",
+        "dataProvenance",
+        "labelDataset"
+      ]
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "evidenceId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ADDRESS_LABEL",
+            "DIRECT_FLOW",
+            "TEMPORAL_PATTERN"
+          ]
+        },
+        "transactionSignatures": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Signature"
+          },
+          "uniqueItems": true
+        },
+        "transferIds": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "relatedAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Address"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "labelReferenceIds": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "source": {
+          "$ref": "kyt.schema.json#/$defs/EvidenceSource"
+        }
+      },
+      "required": [
+        "evidenceId",
+        "type",
+        "transactionSignatures",
+        "transferIds",
+        "relatedAddresses",
+        "labelReferenceIds",
+        "source"
+      ]
+    },
+    "KYTEvaluationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "snapshot": {
+          "$ref": "collector.schema.json#/$defs/KYTDataSnapshot"
+        },
+        "rulesetVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        }
+      },
+      "required": [
+        "requestId",
+        "snapshot",
+        "rulesetVersion"
+      ]
+    },
+    "KYTEvaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "subjectAddress": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "snapshotId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "rulesetVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "riskScore": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "riskLevel": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/RiskLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "detectedRules": {
+          "type": "array",
+          "items": {
+            "$ref": "kyt.schema.json#/$defs/DetectedRule"
+          }
+        },
+        "evidences": {
+          "type": "array",
+          "items": {
+            "$ref": "kyt.schema.json#/$defs/Evidence"
+          }
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "subjectAddress",
+        "snapshotId",
+        "rulesetVersion",
+        "riskScore",
+        "riskLevel",
+        "detectedRules",
+        "evidences"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "riskScore": {
+                "const": null
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "riskLevel": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "riskLevel": {
+                "$ref": "common.schema.json#/$defs/RiskLevel"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "riskScore": {
+                "const": 0
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "riskLevel": {
+                "const": "LOW"
+              },
+              "detectedRules": {
+                "maxItems": 0
+              },
+              "evidences": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "riskScore": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "riskLevel": {
+                "type": "string",
+                "enum": [
+                  "MEDIUM",
+                  "HIGH"
+                ]
+              },
+              "detectedRules": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SimpleRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ruleVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "riskLevel": {
+          "type": "string",
+          "enum": [
+            "MEDIUM",
+            "HIGH"
+          ]
+        }
+      },
+      "required": [
+        "ruleVersion",
+        "enabled",
+        "score",
+        "riskLevel"
+      ]
+    },
+    "FanOutRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ruleVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "riskLevel": {
+          "type": "string",
+          "enum": [
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "windowSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "minRecipients": {
+          "type": "integer",
+          "minimum": 2
+        }
+      },
+      "required": [
+        "ruleVersion",
+        "enabled",
+        "score",
+        "riskLevel",
+        "windowSeconds",
+        "minRecipients"
+      ]
+    },
+    "RepeatRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ruleVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "score": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "riskLevel": {
+          "type": "string",
+          "enum": [
+            "MEDIUM",
+            "HIGH"
+          ]
+        },
+        "windowSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "minTransactions": {
+          "type": "integer",
+          "minimum": 2
+        }
+      },
+      "required": [
+        "ruleVersion",
+        "enabled",
+        "score",
+        "riskLevel",
+        "windowSeconds",
+        "minTransactions"
+      ]
+    },
+    "Ruleset": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "highRiskThreshold": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "SANCTION_EXACT": {
+              "$ref": "kyt.schema.json#/$defs/SimpleRule"
+            },
+            "SANCTION_DIRECT_FLOW": {
+              "$ref": "kyt.schema.json#/$defs/SimpleRule"
+            },
+            "RAPID_FAN_OUT": {
+              "$ref": "kyt.schema.json#/$defs/FanOutRule"
+            },
+            "RAPID_REPEAT": {
+              "$ref": "kyt.schema.json#/$defs/RepeatRule"
+            }
+          },
+          "required": [
+            "SANCTION_EXACT",
+            "SANCTION_DIRECT_FLOW",
+            "RAPID_FAN_OUT",
+            "RAPID_REPEAT"
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "highRiskThreshold",
+        "rules"
+      ]
+    }
+  },
+  "$ref": "#/$defs/KYTEvaluation"
+}

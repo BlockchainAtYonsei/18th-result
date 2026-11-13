@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "0.1.0",
+  "analysisId": "demo-busy-clean-analysis",
+  "requestId": "demo-busy-clean-request",
+  "status": "COMPLETED",
+  "address": "5sHVdLuEBVXK8wRMzqESJcFKNdWuEWHPMrES7iPok2UL",
+  "network": "mainnet-beta",
+  "mode": "FIXTURE",
+  "createdAt": "2026-11-10T17:10:16.511Z",
+  "updatedAt": "2026-11-10T17:10:16.520Z",
+  "snapshotId": "demo-busy-clean-snapshot",
+  "coverage": {
+    "status": "COMPLETE",
+    "reasons": [],
+    "fromTime": "2026-11-01T00:00:00Z",
+    "toTime": "2026-11-02T00:00:00Z",
+    "snapshotSlot": 400000,
+    "transactionCount": 18,
+    "transferCount": 18,
+    "reachedTimeBoundary": true
+  },
+  "dataProvenance": {
+    "dataType": "SYNTHETIC",
+    "source": "TEST_FIXTURE",
+    "reference": "https://example.invalid/frontend-demo-scenarios"
+  },
+  "evaluation": {
+    "schemaVersion": "0.1.0",
+    "subjectAddress": "5sHVdLuEBVXK8wRMzqESJcFKNdWuEWHPMrES7iPok2UL",
+    "snapshotId": "demo-busy-clean-snapshot",
+    "rulesetVersion": "1.0.0",
+    "riskScore": 0,
+    "riskLevel": "LOW",
+    "detectedRules": [],
+    "evidences": []
+  },
+  "error": null
+}

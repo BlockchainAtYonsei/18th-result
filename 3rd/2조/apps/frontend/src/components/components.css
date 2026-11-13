@@ -1,0 +1,247 @@
+/* Term: the word stays, a dotted underline says it can be explained */
+.term {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: underline dotted var(--muted);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+.term:hover,
+.term:focus-visible {
+  text-decoration-color: var(--accent);
+}
+.tip {
+  max-width: 300px;
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--r);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
+  box-shadow: var(--shadow-pop);
+  border: 1px solid var(--line);
+  z-index: 60;
+}
+.tip-term {
+  color: var(--text);
+  font-weight: 600;
+}
+.tip-arrow {
+  fill: var(--surface-2);
+}
+
+/* status tags: icon + word */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: var(--r-xs);
+  background: var(--fill-2);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text);
+}
+.tag-lg {
+  height: 32px;
+  padding: 0 12px;
+  font-size: var(--text-title-s);
+  font-weight: 700;
+  gap: 10px;
+}
+.status-ic {
+  display: inline-grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  color: #0b0b0b;
+  flex: none;
+}
+.tag-lg .status-ic {
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+.status-allow { background: var(--allow); }
+.status-warn { background: var(--warn); }
+.status-review { background: var(--review); }
+.status-block { background: var(--block); color: #fff; }
+.status-none { background: transparent; border: 1px dashed var(--muted); color: var(--muted); }
+
+/* address and transaction chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.identicon {
+  border-radius: 4px;
+  flex: none;
+}
+.mono-wrap {
+  word-break: break-all;
+}
+.xl {
+  display: inline-flex;
+  gap: 4px;
+}
+.xl a,
+.xl-off {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-xs);
+  font-size: 11px;
+  line-height: 1;
+}
+.xl a {
+  background: var(--fill-2);
+  color: var(--text-2);
+}
+.xl a:hover {
+  background: var(--fill-3);
+  color: var(--text);
+  text-decoration: none;
+}
+.xl-off {
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  cursor: not-allowed;
+}
+.copy-btn {
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: 11px;
+  padding: 0 2px;
+}
+
+/* risk gauge */
+.gauge {
+  display: grid;
+  gap: 6px;
+}
+.gauge-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.gauge-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-number-l);
+  line-height: 1;
+}
+.gauge-none {
+  font-family: var(--font-ui);
+  font-size: var(--text-title-s);
+  font-weight: 600;
+  color: var(--text-2);
+}
+.gauge-bar {
+  width: 100%;
+  height: 10px;
+  display: block;
+}
+.gauge-scale {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 16px;
+}
+.gauge-mark {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+/* notices */
+.notice {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: var(--r);
+  background: var(--fill-1);
+  border: 1px solid var(--line);
+}
+.notice-error {
+  border-color: rgb(208 59 59 / 0.45);
+  background: rgb(208 59 59 / 0.06);
+}
+.notice-warn {
+  border-color: rgb(250 178 25 / 0.35);
+  background: rgb(250 178 25 / 0.06);
+}
+
+/* charts */
+.chart-frame {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.chart-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.chart-tools {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.chart-body svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.table-wrap {
+  overflow-x: auto;
+}
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-table);
+  line-height: var(--leading-table);
+}
+table.data th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: var(--text-caption);
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+table.data td {
+  padding: 10px;
+  border-top: 1px solid var(--hairline);
+  vertical-align: middle;
+}
+
+/* dither waiting mark */
+.dither {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.dither canvas {
+  image-rendering: pixelated;
+  border-radius: 2px;
+}

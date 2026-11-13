@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "0.1.0",
+  "requestId": "demo-burst-policy-request",
+  "intent": {
+    "intentId": "demo-burst-intent",
+    "network": "mainnet-beta",
+    "sender": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+    "recipient": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+    "asset": {
+      "type": "SOL",
+      "mint": null,
+      "decimals": 9
+    },
+    "amountRaw": "1000000000",
+    "requestedAt": "2026-11-02T00:00:00Z"
+  },
+  "assessments": {
+    "sender": {
+      "schemaVersion": "0.1.0",
+      "subjectAddress": "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi",
+      "snapshotId": "sender-snapshot",
+      "rulesetVersion": "1.0.0",
+      "riskScore": 0,
+      "riskLevel": "LOW",
+      "detectedRules": [],
+      "evidences": []
+    },
+    "recipient": {
+      "schemaVersion": "0.1.0",
+      "subjectAddress": "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+      "snapshotId": "demo-burst-snapshot",
+      "rulesetVersion": "1.0.0",
+      "riskScore": 60,
+      "riskLevel": "MEDIUM",
+      "detectedRules": [
+        {
+          "ruleId": "RAPID_FAN_OUT",
+          "ruleVersion": "1.0.0",
+          "riskLevel": "MEDIUM",
+          "scoreContribution": 35,
+          "evidenceIds": [
+            "evidence-e3c5b9ce0947b99260509ed98bc8b33ea7f75c3b6b81a139373323a26b448df2"
+          ]
+        },
+        {
+          "ruleId": "RAPID_REPEAT",
+          "ruleVersion": "1.0.0",
+          "riskLevel": "MEDIUM",
+          "scoreContribution": 25,
+          "evidenceIds": [
+            "evidence-4a34a4374191565a34f6dcbdd09f913d4b1702339fda6f5386cdfeb603bf0817"
+          ]
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceId": "evidence-4a34a4374191565a34f6dcbdd09f913d4b1702339fda6f5386cdfeb603bf0817",
+          "type": "TEMPORAL_PATTERN",
+          "transactionSignatures": [
+            "33QAw8QHF8jnZT8uk8cqYKGXaH8Q4c279FFvYYYckH8hiB1b27Nng1K1owCoTDsvSy5ycEq9E3UJHERxExNFX492",
+            "3Z5mJFBdMQEcxYyRFUxZ5wjCXhgEXUUSRqaWP5Fdyjgu6j2X2k5eypyjxCzumPEBXcHtBG5nBmZA97XfpFWQAK47",
+            "4BpVDiuEzaY1uKfaWFA8c3huGBAWH2ZrJJ4r2V4nm9mX9dkcwRRCtR3rKb2aeZegKyLu7PyFberteK7QxDABeTaU",
+            "4kxdwqVbyYSNkzYEPgBf4aXDZVKCiue2LaGDzjtoU2XKLcVYFnDAckaxSFz5NguXbWCQqBSTTrAD7VRGQLRBsY3J",
+            "rRxWN3tggZjTkoWcJ8uExESYfMFueSaFwJXs84C9DnE1HmnxZEov6fCJKY4uFg6X87NigtBtpVFGq73qcof48eQ"
+          ],
+          "transferIds": [
+            "transfer-4",
+            "transfer-5",
+            "transfer-6",
+            "transfer-7",
+            "transfer-8"
+          ],
+          "relatedAddresses": [
+            "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+            "Hw9rAQtx8xhLy9Ai5p5pT2G31UNAcQk2gvihLcn4bfuG"
+          ],
+          "labelReferenceIds": [],
+          "source": {
+            "snapshotId": "demo-burst-snapshot",
+            "network": "mainnet-beta",
+            "mode": "FIXTURE",
+            "dataProvenance": {
+              "dataType": "SYNTHETIC",
+              "source": "TEST_FIXTURE",
+              "reference": "https://example.invalid/frontend-demo-scenarios"
+            },
+            "labelDataset": {
+              "source": "TEST_FIXTURE",
+              "version": "1.0.0",
+              "fetchedAt": "2026-11-02T00:00:00Z"
+            }
+          }
+        },
+        {
+          "evidenceId": "evidence-e3c5b9ce0947b99260509ed98bc8b33ea7f75c3b6b81a139373323a26b448df2",
+          "type": "TEMPORAL_PATTERN",
+          "transactionSignatures": [
+            "3VMVqsWg4h6YmAsaaegrQ1QwDs7eZ5iJzebt39NEJyThRQmfy2QVuq2Mm1gHpz4n5H5hPa1F486VKRrUMXWnEuC5",
+            "61eBa39SbvYD3kEaY7xQcdxUkKMLi8X3a9h2xswCypKtwpN4kR68rVMToTqSBeiUJYAmW6uXLqEhfRcJLMyL7HET",
+            "6c4EKy4Hk6GfU1yF9Yry5N8j7sFud1n2hPTbMTkeJ7RuvGZZ2gp7PiacvBrjx1iKo1T5LCP48AAS8DzkKLMTpoV",
+            "beAjvJ7e9rr1Hg4Q3iUGFVkaTm1cHYgp2t8N8yLNSxThHZA4z6Wu6wTerzm96TTX1EWvq5a1ejHsyTXh4BVdZXv"
+          ],
+          "transferIds": [
+            "transfer-10",
+            "transfer-11",
+            "transfer-12",
+            "transfer-13"
+          ],
+          "relatedAddresses": [
+            "4789ZPPFTRc4yiiWCf6rk2SaC1PCYDNWy9ZPzDjjqtqW",
+            "4D4uwXcQeiGXnMEm2zpEQiS5Q8xFZHAn8oYwnD69NVfU",
+            "93JPcPiSyDHqmvdau8R7Q132e7iLcNbLszgkNhY1hkN4",
+            "AyZQAj4cnjirRNqJiARiVHjL6aUSFm6qF3sDb8KqAk9n",
+            "EsnRTyeVwkExTeo8ttASqi9eTNyvcjTQDpkZirTJFB8j"
+          ],
+          "labelReferenceIds": [],
+          "source": {
+            "snapshotId": "demo-burst-snapshot",
+            "network": "mainnet-beta",
+            "mode": "FIXTURE",
+            "dataProvenance": {
+              "dataType": "SYNTHETIC",
+              "source": "TEST_FIXTURE",
+              "reference": "https://example.invalid/frontend-demo-scenarios"
+            },
+            "labelDataset": {
+              "source": "TEST_FIXTURE",
+              "version": "1.0.0",
+              "fetchedAt": "2026-11-02T00:00:00Z"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "decision": {
+    "schemaVersion": "0.1.0",
+    "decisionId": "decision-299f394115656e3f11e87bff0cdd552864cd35c11083dfcdcaa5864ec4bd72be",
+    "intentId": "demo-burst-intent",
+    "action": "WARN",
+    "riskScore": 60,
+    "riskLevel": "MEDIUM",
+    "reasonCodes": [
+      "RISK_SIGNALS_DETECTED"
+    ],
+    "referencedEvidenceIds": [
+      "evidence-4a34a4374191565a34f6dcbdd09f913d4b1702339fda6f5386cdfeb603bf0817",
+      "evidence-e3c5b9ce0947b99260509ed98bc8b33ea7f75c3b6b81a139373323a26b448df2"
+    ],
+    "policyVersion": "1.0.0",
+    "evaluatedAt": "2026-11-02T00:00:00Z"
+  }
+}

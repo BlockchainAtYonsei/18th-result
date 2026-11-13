@@ -1,0 +1,13 @@
+# Lets the dev Backend's fixture collector read the frontend demo scenarios as well as the contract fixtures.
+# Run from the repository root, after `pnpm demo:fixtures` in apps/frontend has built demo/.backend-fixtures:
+#
+#   docker compose -f compose.dev.yaml -f apps/frontend/demo/compose.demo.yaml up --build -d --wait
+#
+# Without this file the dev Backend only knows contracts/fixtures, and a demo scenario fails with
+# "collector: fixture not found: demo-layering".
+services:
+  backend:
+    environment:
+      LOCAL_COLLECTOR_FIXTURES_DIR: /workspace/demo-fixtures
+    volumes:
+      - ./apps/frontend/demo/.backend-fixtures:/workspace/demo-fixtures:ro

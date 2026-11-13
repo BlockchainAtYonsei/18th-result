@@ -1,0 +1,1225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://baypeline.github.io/solana-compliance-lab/contracts/schemas/api.schema.json",
+  "title": "api",
+  "$comment": "Unified team specifications; initial draft 0.1.0.",
+  "$defs": {
+    "AnalysisRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "network": {
+          "$ref": "common.schema.json#/$defs/Network"
+        },
+        "mode": {
+          "$ref": "common.schema.json#/$defs/Mode"
+        },
+        "fixtureId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "scope": {
+          "$ref": "common.schema.json#/$defs/Scope"
+        },
+        "rulesetVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        }
+      },
+      "required": [
+        "address",
+        "network",
+        "mode",
+        "scope"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "FIXTURE"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "fixtureId"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "LIVE"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "fixtureId"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "AnalysisAccepted": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "analysisId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "status": {
+          "const": "QUEUED"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "analysisId",
+        "requestId",
+        "status"
+      ]
+    },
+    "KYTAnalysisResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "analysisId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "status": {
+          "$ref": "common.schema.json#/$defs/JobStatus"
+        },
+        "address": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "network": {
+          "$ref": "common.schema.json#/$defs/Network"
+        },
+        "mode": {
+          "$ref": "common.schema.json#/$defs/Mode"
+        },
+        "createdAt": {
+          "$ref": "common.schema.json#/$defs/UtcTimestamp"
+        },
+        "updatedAt": {
+          "$ref": "common.schema.json#/$defs/UtcTimestamp"
+        },
+        "snapshotId": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coverage": {
+          "anyOf": [
+            {
+              "$ref": "collector.schema.json#/$defs/Coverage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dataProvenance": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/DataProvenance"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evaluation": {
+          "anyOf": [
+            {
+              "$ref": "kyt.schema.json#/$defs/KYTEvaluation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "analysisId",
+        "requestId",
+        "status",
+        "address",
+        "network",
+        "mode",
+        "createdAt",
+        "updatedAt",
+        "snapshotId",
+        "coverage",
+        "dataProvenance",
+        "evaluation",
+        "error"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "QUEUED",
+                  "RUNNING"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "snapshotId": {
+                "type": "null"
+              },
+              "coverage": {
+                "type": "null"
+              },
+              "dataProvenance": {
+                "type": "null"
+              },
+              "evaluation": {
+                "type": "null"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "COMPLETED",
+                  "PARTIAL"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "snapshotId": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "coverage": {
+                "$ref": "collector.schema.json#/$defs/Coverage"
+              },
+              "dataProvenance": {
+                "$ref": "common.schema.json#/$defs/DataProvenance"
+              },
+              "evaluation": {
+                "$ref": "kyt.schema.json#/$defs/KYTEvaluation"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "COMPLETED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "coverage": {
+                "properties": {
+                  "status": {
+                    "const": "COMPLETE"
+                  }
+                }
+              },
+              "evaluation": {
+                "properties": {
+                  "riskScore": {
+                    "type": "integer"
+                  },
+                  "riskLevel": {
+                    "$ref": "common.schema.json#/$defs/RiskLevel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "PARTIAL"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "coverage": {
+                "properties": {
+                  "status": {
+                    "const": "PARTIAL"
+                  }
+                }
+              },
+              "evaluation": {
+                "properties": {
+                  "riskScore": {
+                    "type": "null"
+                  },
+                  "riskLevel": {
+                    "type": "null"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "FAILED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "$ref": "common.schema.json#/$defs/Error"
+              },
+              "snapshotId": {
+                "type": "null"
+              },
+              "coverage": {
+                "type": "null"
+              },
+              "dataProvenance": {
+                "type": "null"
+              },
+              "evaluation": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "TransferPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "analysisId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "snapshotId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "collector.schema.json#/$defs/NormalizedTransfer"
+          }
+        },
+        "pagination": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "nextCursor": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/Id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "limit",
+            "nextCursor"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "analysisId",
+        "snapshotId",
+        "items",
+        "pagination"
+      ]
+    },
+    "ComplianceRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "$ref": "policy.schema.json#/$defs/TransactionIntent"
+        },
+        "senderAnalysisId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "recipientAnalysisId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "policyVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        }
+      },
+      "required": [
+        "intent",
+        "senderAnalysisId",
+        "recipientAnalysisId",
+        "policyVersion"
+      ]
+    },
+    "ComplianceResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "intent": {
+          "$ref": "policy.schema.json#/$defs/TransactionIntent"
+        },
+        "assessments": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sender": {
+              "$ref": "kyt.schema.json#/$defs/KYTEvaluation"
+            },
+            "recipient": {
+              "$ref": "kyt.schema.json#/$defs/KYTEvaluation"
+            }
+          },
+          "required": [
+            "sender",
+            "recipient"
+          ]
+        },
+        "decision": {
+          "$ref": "policy.schema.json#/$defs/ComplianceDecision"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "intent",
+        "assessments",
+        "decision"
+      ]
+    },
+    "GatewayRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "intentId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "decisionId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "route": {
+          "$ref": "experiment.schema.json#/$defs/GatewayRoute"
+        }
+      },
+      "required": [
+        "intentId",
+        "decisionId",
+        "route"
+      ]
+    },
+    "ConstellationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "intentId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "decisionId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "protocolModelVersion": {
+          "$ref": "common.schema.json#/$defs/Version"
+        },
+        "scenario": {
+          "$ref": "experiment.schema.json#/$defs/ConstellationScenario"
+        }
+      },
+      "required": [
+        "intentId",
+        "decisionId",
+        "protocolModelVersion",
+        "scenario"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "protocolModelVersion": {
+                "enum": [
+                  "0.2.0-research",
+                  "0.2.0-single-leader"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scenario": {
+                "$ref": "experiment.schema.json#/$defs/ResearchConstellationScenario"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExperimentRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "recordId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "type": {
+          "enum": [
+            "GATEWAY",
+            "CONSTELLATION"
+          ]
+        },
+        "requestId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "createdAt": {
+          "$ref": "common.schema.json#/$defs/UtcTimestamp"
+        },
+        "intentId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "decisionId": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "review": {
+          "$ref": "api.schema.json#/$defs/ComplianceResponse"
+        },
+        "request": {
+          "type": "object"
+        },
+        "result": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "recordId",
+        "type",
+        "requestId",
+        "createdAt",
+        "intentId",
+        "decisionId",
+        "review",
+        "request",
+        "result"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "GATEWAY"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "request": {
+                "$ref": "api.schema.json#/$defs/GatewayRequest"
+              },
+              "result": {
+                "$ref": "experiment.schema.json#/$defs/GatewayExperimentResult"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "CONSTELLATION"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "request": {
+                "$ref": "api.schema.json#/$defs/ConstellationRequest"
+              },
+              "result": {
+                "$ref": "experiment.schema.json#/$defs/ConstellationSimulationResult"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExperimentPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "api.schema.json#/$defs/ExperimentRecord"
+          }
+        },
+        "pagination": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "nextCursor": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "minLength": 1
+            }
+          },
+          "required": [
+            "limit",
+            "nextCursor"
+          ]
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "items",
+        "pagination"
+      ]
+    },
+    "StoredCaseError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "code",
+        "message",
+        "retryable",
+        "status",
+        "requestId"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "http",
+            "contract",
+            "network",
+            "request",
+            "timeout"
+          ]
+        },
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 100,
+              "maximum": 599
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requestId": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CaseParty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "address",
+        "fixtureId"
+      ],
+      "properties": {
+        "address": {
+          "$ref": "common.schema.json#/$defs/Address"
+        },
+        "fixtureId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CaseInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "sender",
+        "recipient",
+        "asset",
+        "amountRaw",
+        "scope",
+        "policyVersion",
+        "rulesetVersion"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "LIVE",
+            "FIXTURE"
+          ]
+        },
+        "sender": {
+          "$ref": "api.schema.json#/$defs/CaseParty"
+        },
+        "recipient": {
+          "$ref": "api.schema.json#/$defs/CaseParty"
+        },
+        "asset": {
+          "$ref": "common.schema.json#/$defs/Asset"
+        },
+        "amountRaw": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Scope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "policyVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "rulesetVersion": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CaseAnalysisSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "analysisId",
+        "result",
+        "transfers"
+      ],
+      "properties": {
+        "analysisId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "result": {
+          "$ref": "api.schema.json#/$defs/KYTAnalysisResult"
+        },
+        "transfers": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "collector.schema.json#/$defs/NormalizedTransfer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CaseGatewayRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "at",
+        "result",
+        "error",
+        "route"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "experiment.schema.json#/$defs/GatewayExperimentResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "api.schema.json#/$defs/StoredCaseError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "route": {
+          "$ref": "experiment.schema.json#/$defs/GatewayRoute"
+        }
+      }
+    },
+    "CaseConstellationRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "at",
+        "result",
+        "error",
+        "batch",
+        "purpose",
+        "version",
+        "scenario"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "experiment.schema.json#/$defs/ConstellationSimulationResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "api.schema.json#/$defs/StoredCaseError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "batch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "purpose": {
+          "enum": [
+            "compare",
+            "sweep"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "scenario": {
+          "$ref": "experiment.schema.json#/$defs/ConstellationScenario"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "version": {
+                "enum": [
+                  "0.2.0-research",
+                  "0.2.0-single-leader"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "scenario": {
+                "$ref": "experiment.schema.json#/$defs/ResearchConstellationScenario"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CaseRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runId",
+        "startedAt",
+        "finishedAt",
+        "apiMode",
+        "status",
+        "failedStep",
+        "error",
+        "sender",
+        "recipient",
+        "complianceRequest",
+        "compliance",
+        "gateway",
+        "constellation"
+      ],
+      "properties": {
+        "runId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finishedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "apiMode": {
+          "enum": [
+            "mock",
+            "backend"
+          ]
+        },
+        "status": {
+          "enum": [
+            "RUNNING",
+            "DONE",
+            "FAILED"
+          ]
+        },
+        "failedStep": {
+          "anyOf": [
+            {
+              "enum": [
+                "sender",
+                "recipient",
+                "policy"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "api.schema.json#/$defs/StoredCaseError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sender": {
+          "anyOf": [
+            {
+              "$ref": "api.schema.json#/$defs/CaseAnalysisSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recipient": {
+          "anyOf": [
+            {
+              "$ref": "api.schema.json#/$defs/CaseAnalysisSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "complianceRequest": {
+          "anyOf": [
+            {
+              "$ref": "api.schema.json#/$defs/ComplianceRequest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "compliance": {
+          "anyOf": [
+            {
+              "$ref": "api.schema.json#/$defs/ComplianceResponse"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gateway": {
+          "type": "array",
+          "items": {
+            "$ref": "api.schema.json#/$defs/CaseGatewayRecord"
+          }
+        },
+        "constellation": {
+          "type": "array",
+          "items": {
+            "$ref": "api.schema.json#/$defs/CaseConstellationRecord"
+          }
+        }
+      }
+    },
+    "CaseRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "createdAt",
+        "createdBy",
+        "input",
+        "runs"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CL-[0-9]{1,40}$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "input": {
+          "$ref": "api.schema.json#/$defs/CaseInput"
+        },
+        "runs": {
+          "type": "array",
+          "items": {
+            "$ref": "api.schema.json#/$defs/CaseRun"
+          }
+        }
+      }
+    },
+    "CaseDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "revision",
+        "case"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "case": {
+          "$ref": "api.schema.json#/$defs/CaseRecord"
+        }
+      }
+    },
+    "CaseWrite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "expectedRevision",
+        "case"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "expectedRevision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "case": {
+          "$ref": "api.schema.json#/$defs/CaseRecord"
+        }
+      }
+    },
+    "CasePage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "items",
+        "nextCursor"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "api.schema.json#/$defs/CaseDocument"
+          }
+        },
+        "nextCursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^CL-[0-9]{1,40}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "CaseDeleted": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "caseId",
+        "deleted"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1.0"
+        },
+        "caseId": {
+          "type": "string",
+          "pattern": "^CL-[0-9]{1,40}$"
+        },
+        "deleted": {
+          "const": true
+        }
+      }
+    }
+  }
+}
