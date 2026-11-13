@@ -1,0 +1,1178 @@
+[
+  {
+    "name": "NewCashGroup",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "cashGroupId",
+        "type": "uint8",
+        "indexed": true,
+        "internalType": "uint8"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "previousOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "newOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "SetHaircuts",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "liquidityHaircut",
+        "type": "uint128",
+        "indexed": false,
+        "internalType": "uint128"
+      },
+      {
+        "name": "fCashHaircut",
+        "type": "uint128",
+        "indexed": false,
+        "internalType": "uint128"
+      },
+      {
+        "name": "fCashMaxHaircut",
+        "type": "uint128",
+        "indexed": false,
+        "internalType": "uint128"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "SetMaxAssets",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "maxAssets",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "SettleAccount",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "SettleAccountBatch",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "accounts",
+        "type": "address[]",
+        "indexed": false,
+        "internalType": "address[]"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "UpdateCashGroup",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "cashGroupId",
+        "type": "uint8",
+        "indexed": true,
+        "internalType": "uint8"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "DIRECTORY",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "G_FCASH_HAIRCUT",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "G_FCASH_MAX_HAIRCUT",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "G_LIQUIDITY_HAIRCUT",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "G_MAX_ASSETS",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "G_NUM_CURRENCIES",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "cashGroups",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint8",
+        "internalType": "uint8"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "numMaturities",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "maturityLength",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "precision",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "cashMarket",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "currency",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "createCashGroup",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "numMaturities",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "maturityLength",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "precision",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "currency",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "cashMarket",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "currentCashGroupId",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8",
+        "internalType": "uint8"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "freeCollateral",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      },
+      {
+        "name": "",
+        "type": "int256[]",
+        "internalType": "int256[]"
+      },
+      {
+        "name": "",
+        "type": "int256[]",
+        "internalType": "int256[]"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "freeCollateralAggregateOnly",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "freeCollateralFactors",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "localCurrency",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "collateralCurrency",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "aggregate",
+            "type": "int256",
+            "internalType": "int256"
+          },
+          {
+            "name": "localNetAvailable",
+            "type": "int256",
+            "internalType": "int256"
+          },
+          {
+            "name": "collateralNetAvailable",
+            "type": "int256",
+            "internalType": "int256"
+          },
+          {
+            "name": "localCashClaim",
+            "type": "int256",
+            "internalType": "int256"
+          },
+          {
+            "name": "collateralCashClaim",
+            "type": "int256",
+            "internalType": "int256"
+          }
+        ],
+        "internalType": "struct Common.FreeCollateralFactors"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "freeCollateralView",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      },
+      {
+        "name": "",
+        "type": "int256[]",
+        "internalType": "int256[]"
+      },
+      {
+        "name": "",
+        "type": "int256[]",
+        "internalType": "int256[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "freeCollateralViewAggregateOnly",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getAsset",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "index",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "cashGroupId",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "instrumentId",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "maturity",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "assetType",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "rate",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "notional",
+            "type": "uint128",
+            "internalType": "uint128"
+          }
+        ],
+        "internalType": "struct Common.Asset"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getAssets",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "cashGroupId",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "instrumentId",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "maturity",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "assetType",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "rate",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "notional",
+            "type": "uint128",
+            "internalType": "uint128"
+          }
+        ],
+        "internalType": "struct Common.Asset[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getCashGroup",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "cashGroupId",
+        "type": "uint8",
+        "internalType": "uint8"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "numMaturities",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "maturityLength",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "precision",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "cashMarket",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "currency",
+            "type": "uint16",
+            "internalType": "uint16"
+          }
+        ],
+        "internalType": "struct Common.CashGroup"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getCashGroups",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "groupIds",
+        "type": "uint8[]",
+        "internalType": "uint8[]"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "numMaturities",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "maturityLength",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "precision",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "cashMarket",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "currency",
+            "type": "uint16",
+            "internalType": "uint16"
+          }
+        ],
+        "internalType": "struct Common.CashGroup[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "directory",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "owner",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "initialize",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "directory",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "owner",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "numCurrencies",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "maxAssets",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "isOwner",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "mintfCashPair",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "payer",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "receiver",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "cashGroupId",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "maturity",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "notional",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "raiseCurrentCashViaCashReceiver",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "liquidator",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "currency",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "amount",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint128",
+        "internalType": "uint128"
+      },
+      {
+        "name": "",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "raiseCurrentCashViaLiquidityToken",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "currency",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "amount",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "inputs": [],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "searchAccountAsset",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "assetType",
+        "type": "bytes1",
+        "internalType": "bytes1"
+      },
+      {
+        "name": "cashGroupId",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "instrumentId",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "maturity",
+        "type": "uint32",
+        "internalType": "uint32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "cashGroupId",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "instrumentId",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "maturity",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "assetType",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "rate",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "notional",
+            "type": "uint128",
+            "internalType": "uint128"
+          }
+        ],
+        "internalType": "struct Common.Asset"
+      },
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "setContract",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "name",
+        "type": "uint8",
+        "internalType": "enum Governed.CoreContracts"
+      },
+      {
+        "name": "contractAddress",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "setHaircuts",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "liquidityHaircut",
+        "type": "uint128",
+        "internalType": "uint128"
+      },
+      {
+        "name": "fCashHaircut",
+        "type": "uint128",
+        "internalType": "uint128"
+      },
+      {
+        "name": "fCashMaxHaircut",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "setMaxAssets",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "maxAssets",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "setNumCurrencies",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "numCurrencies",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "settleMaturedAssets",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "settleMaturedAssetsBatch",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "accounts",
+        "type": "address[]",
+        "internalType": "address[]"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "transferAccountAsset",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "from",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "to",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "assetType",
+        "type": "bytes1",
+        "internalType": "bytes1"
+      },
+      {
+        "name": "cashGroupId",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "instrumentId",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "maturity",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "value",
+        "type": "uint128",
+        "internalType": "uint128"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "updateCashGroup",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "cashGroupId",
+        "type": "uint8",
+        "internalType": "uint8"
+      },
+      {
+        "name": "numMaturities",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "maturityLength",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "precision",
+        "type": "uint32",
+        "internalType": "uint32"
+      },
+      {
+        "name": "currency",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "cashMarket",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "upsertAccountAsset",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "asset",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "cashGroupId",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "instrumentId",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "maturity",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "assetType",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "rate",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "notional",
+            "type": "uint128",
+            "internalType": "uint128"
+          }
+        ],
+        "internalType": "struct Common.Asset"
+      },
+      {
+        "name": "checkFreeCollateral",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "upsertAccountAssetBatch",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "assets",
+        "type": "tuple[]",
+        "components": [
+          {
+            "name": "cashGroupId",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "instrumentId",
+            "type": "uint16",
+            "internalType": "uint16"
+          },
+          {
+            "name": "maturity",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "assetType",
+            "type": "bytes1",
+            "internalType": "bytes1"
+          },
+          {
+            "name": "rate",
+            "type": "uint32",
+            "internalType": "uint32"
+          },
+          {
+            "name": "notional",
+            "type": "uint128",
+            "internalType": "uint128"
+          }
+        ],
+        "internalType": "struct Common.Asset[]"
+      },
+      {
+        "name": "checkFreeCollateral",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  }
+]

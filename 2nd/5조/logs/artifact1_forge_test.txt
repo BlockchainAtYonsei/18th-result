@@ -1,0 +1,42 @@
+Compiling 22 files with Solc 0.8.24
+Solc 0.8.24 finished in 981.62ms
+Compiler run successful!
+
+Ran 14 tests for test/CastingBoundary.t.sol:CastingBoundaryTest
+[PASS] test_oz_safecast_two128_reverts() (gas: 3975)
+[PASS] test_print_boundary_table() (gas: 58826)
+Logs:
+  input: 0
+  unsafe: 0
+  safe: 0
+  input: 1
+  unsafe: 1
+  safe: 1
+  input: 2^128-2
+  unsafe: 340282366920938463463374607431768211454
+  safe: 340282366920938463463374607431768211454
+  input: 2^128-1
+  unsafe: 340282366920938463463374607431768211455
+  safe: 340282366920938463463374607431768211455
+  input: 2^128
+  unsafe: 0
+  safe=REVERT
+  input: 2^128+1
+  unsafe: 1
+  safe=REVERT
+
+[PASS] test_safe_in_range_ok() (gas: 1574)
+[PASS] test_safe_neg_two128_reverts() (gas: 9209)
+[PASS] test_safe_two128_plus_one_reverts() (gas: 9162)
+[PASS] test_safe_two128_reverts() (gas: 9066)
+[PASS] test_sum_case_safe_reverts() (gas: 9373)
+[PASS] test_sum_case_unsafe_is_zero() (gas: 6179)
+[PASS] test_unsafe_one() (gas: 613)
+[PASS] test_unsafe_two128_plus_one_truncates_to_one() (gas: 11559)
+[PASS] test_unsafe_two128_truncates_to_zero() (gas: 11482)
+[PASS] test_unsafe_u128max() (gas: 665)
+[PASS] test_unsafe_u128max_minus_one() (gas: 957)
+[PASS] test_unsafe_zero() (gas: 383)
+Suite result: ok. 14 passed; 0 failed; 0 skipped; finished in 869.15µs (1.30ms CPU time)
+
+Ran 1 test suite in 11.79ms (869.15µs CPU time): 14 tests passed, 0 failed, 0 skipped (14 total tests)

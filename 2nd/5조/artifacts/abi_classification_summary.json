@@ -1,0 +1,28 @@
+{
+  "total_functions": 180,
+  "by_contract": {
+    "Escrow": 48,
+    "Portfolios": 38,
+    "ERC1155Trade": 22,
+    "ERC1155Token": 18,
+    "Directory": 9,
+    "EscrowPauseImpl": 5,
+    "CashMarket": 40
+  },
+  "by_primary": {
+    "기타·관리자": 145,
+    "신규 포지션·청구권 생성": 13,
+    "정산·상환": 13,
+    "수동 검토 필요": 1,
+    "출금": 8
+  },
+  "label_occurrences": {
+    "기타·관리자": 145,
+    "신규 포지션·청구권 생성": 15,
+    "수동 검토 필요": 19,
+    "정산·상환": 15,
+    "출금": 8
+  },
+  "multi_label_count": 4,
+  "manual_review_count": 19
+}

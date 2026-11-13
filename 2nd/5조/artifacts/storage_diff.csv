@@ -1,0 +1,10 @@
+compare,variable,base_slot,base_offset,base_type,other_slot,other_offset,other_type,verdict
+Baseline_vs_Restricted,balances,2,0,"t_mapping(t_address,t_uint256)",2,0,"t_mapping(t_address,t_uint256)",MATCH
+Baseline_vs_Restricted,owner,0,0,t_address,0,0,t_address,MATCH
+Baseline_vs_Restricted,paused,0,20,t_bool,0,20,t_bool,MATCH
+Baseline_vs_Restricted,totalSupply,3,0,t_uint256,3,0,t_uint256,MATCH
+Baseline_vs_Restricted,unusedGap,1,0,t_uint96,1,0,t_uint96,MATCH
+Baseline_vs_Broken,balances,2,0,"t_mapping(t_address,t_uint256)",1,0,"t_mapping(t_address,t_uint128)",MISMATCH
+Baseline_vs_Broken,owner,0,0,t_address,0,1,t_address,MISMATCH
+Baseline_vs_Broken,paused,0,20,t_bool,0,0,t_bool,MISMATCH
+Baseline_vs_Broken,totalSupply,3,0,t_uint256,2,0,t_uint256,MISMATCH

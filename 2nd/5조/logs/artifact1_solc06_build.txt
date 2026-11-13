@@ -1,0 +1,4 @@
+Compiling 1 files with Solc 0.6.12
+Solc 0.6.12 finished in 5.26ms
+Compiler run successful!
+Warning: unable to lint. Solar only supports Solidity versions >=0.8.0
